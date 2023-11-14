@@ -148,6 +148,10 @@ def index2():
     all_data3 = db.session.query(Dog).all()
     return render_template('index2.html', message='test', Dog=all_data3)
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    return render_template('search.html')
+
 @app.route('/delete2', methods=['GET', 'POST'])
 def delete2():
     searchName = 'abc'
@@ -253,6 +257,27 @@ def increment_competitions():
 
     searchDog = global_dog
     return render_template('increment_competitions2.html', dog=searchDog)
+
+
+@app.route('/show_all', methods=['GET', 'POST'])
+def show_all():
+    all_data3 = db.session.query(Dog).all()
+    return render_template('show_all.html', message='test', Dog=all_data3)
+
+
+@app.route('/initial_table_data', methods=['GET', 'POST'])
+def initial_table_data():
+    if request.method == 'POST':
+        print('here')
+        db.session.add(Dog('Natalia', 'Lilly', 3, "Female", 'Yorkshire Terrier', 'Tan-Silver', 'High', 'High', 2, 'No'))
+        db.session.add(Dog('Monika', 'Gizmo', 9, 'Male', 'Shith Tzu', 'Black-White', 'Low', 'Medium', 0, 'No')),
+        db.session.add(Dog('Dominik', 'Luna', 3, 'Female', 'Cavapoo', 'Light-Brown', 'Medium', 'Medium', 1, 'No'))
+        db.session.add(Dog('Kasia', 'Coco', 3, 'Male', 'Cockpoo', 'Dark-Brown', 'High', 'Medium', 2, 'No'))
+        db.session.add(Dog('Adrian', 'Lola', 1, 'Female', 'Yorkshire Terrier', 'Silver-Tan', 'High', 'Very High', 0, 'No'))
+        db.session.commit()
+        flash('Initial Table Data Added')
+
+    return render_template('initial_table_data.html')
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
