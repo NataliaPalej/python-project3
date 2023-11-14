@@ -66,6 +66,10 @@ def get_dog_by_owner(owner):
 ###################################################
 
 
+###################################################
+##               INDEX2 METHOD                   ##
+###################################################
+
 @app.route('/', methods=['GET', 'POST'])
 def index2():
     global global_dog
@@ -148,10 +152,17 @@ def index2():
     all_data3 = db.session.query(Dog).all()
     return render_template('index2.html', message='test', Dog=all_data3)
 
+###################################################
+##               SEARCH METHOD                   ##
+###################################################
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     return render_template('search.html')
 
+###################################################
+##               DELETE METHOD                   ##
+###################################################
 @app.route('/delete2', methods=['GET', 'POST'])
 def delete2():
     searchName = 'abc'
@@ -169,6 +180,10 @@ def delete2():
     searchDog = global_dog
     return render_template('delete2.html', dog=searchDog)
 
+
+###################################################
+##               UPDATE METHOD                   ##
+###################################################
 @app.route('/update2', methods=['GET', 'POST'])
 def update2():
     searchName = 'abc'
@@ -208,10 +223,10 @@ def increment(dog, attribute):
         print(f"increment() error: {str(e)}")
         flash(f'Flash increment() error\n'
               f'Error incrementing {attribute} for {dog.name}', 'error')
-###################################################
-##           INCREMENT METHOD ENDS               ##
-###################################################
 
+###################################################
+##            INCREMENT AGE METHOD               ##
+###################################################
 @app.route('/increment_age', methods=['GET', 'POST'])
 def increment_age():
     searchName = 'abc'
@@ -235,6 +250,10 @@ def increment_age():
     searchDog = global_dog
     return render_template('increment_age2.html', dog=searchDog)
 
+
+###################################################
+##       INCREMENT COMPETITIONS METHOD           ##
+###################################################
 @app.route('/increment_competitions', methods=['GET', 'POST'])
 def increment_competitions():
     searchName = 'abc'
@@ -259,12 +278,18 @@ def increment_competitions():
     return render_template('increment_competitions2.html', dog=searchDog)
 
 
+###################################################
+##                GET ALL METHOD                 ##
+###################################################
 @app.route('/show_all', methods=['GET', 'POST'])
 def show_all():
     all_data3 = db.session.query(Dog).all()
     return render_template('show_all.html', message='test', Dog=all_data3)
 
 
+###################################################
+##         INITIAL TABLE DATA METHOD             ##
+###################################################
 @app.route('/initial_table_data', methods=['GET', 'POST'])
 def initial_table_data():
     if request.method == 'POST':
@@ -279,6 +304,10 @@ def initial_table_data():
 
     return render_template('initial_table_data.html')
 
+
+###################################################
+##              ADD NEW DOG METHOD               ##
+###################################################
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
