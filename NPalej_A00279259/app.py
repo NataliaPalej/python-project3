@@ -66,6 +66,87 @@ def get_dog_by_owner(owner):
 ###################################################
 
 
+@app.route('/', methods=['GET', 'POST'])
+def index2():
+    global global_dog
+    if request.method == 'POST':
+        if 'Search_By_Owner' in request.form:
+            if not request.form['owner']:
+                print("index2() Search_By_Owner error")
+                flash('Flash index2() Search_By_Owner error\n'
+                      'Please enter owner name', 'error')
+            else:
+                searchOwner = request.form['owner']
+                dogsList = db.session.query(Dog).filter(Dog.owner == searchOwner).all()
+                return render_template('show_all.html', message='Test', Dog=dogsList)
+
+        elif 'Search_By_Name' in request.form:
+            if not request.form['name']:
+                print("index2() Search_By_Name error")
+                flash('Flash index2() Search_By_Name Error \n'
+                      'Please enter dogs name', 'error')
+            else:
+                searchName = request.form['name']
+                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
+                return render_template('search.html', message='Test', dog=dog)
+
+        elif 'Delete_Dog' in request.form:
+            if not request.form['name']:
+                print("index2() Delete_Dog error")
+                flash('Flash index2() Delete_Dog Error\n'
+                      'Please enter dogs name to delete', 'error')
+            else:
+                searchName = request.form['name']
+                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
+                global_dog = dog
+                return redirect(url_for('delete2', dog=dog))
+
+        elif 'Update_Dog' in request.form:
+            if not request.form['name']:
+                print("index2() Update_Dog error")
+                flash('Flash index2() Update_Dog error\n'
+                      'Please enter dogs name to update', 'error')
+            else:
+                searchName = request.form['name']
+                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
+                global_dog = dog
+                return redirect(url_for('update2', dog=dog))
+
+        elif 'Increment_Dog_Age' in request.form:
+            if not request.form['name']:
+                print("index2() Increment_Dog_Age error")
+                flash('Flash index2() Increment_Dog_Age error\n'
+                      'Please enter all the name fields', 'error')
+            else:
+                searchName = request.form['name']
+                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
+                global_dog = dog
+                return redirect(url_for('increment_age', dog=dog))
+
+        elif 'Increment_Competitions' in request.form:
+            if not request.form['name']:
+                print("index2() Increment_Competitions error")
+                flash('Flash index2() Increment_Competitions error\n'
+                      'Please enter dogs name to increment competitions', 'error')
+            else:
+                searchName = request.form['name']
+                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
+                global_dog = dog
+                return redirect(url_for('increment_competitions', dog=dog))
+
+        elif 'Update_Disqualified' in request.form:
+            if not request.form['name']:
+                print("index2() Update_Disqualified error")
+                flash('Flash index2() Update_Disqualified error\n'
+                      'Please enter dogs name to update disqualified field', 'error')
+            else:
+                searchName = request.form['name']
+                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
+                global_dog = dog
+                return redirect(url_for('update_disqualified2', dog=dog))
+
+    all_data3 = db.session.query(Dog).all()
+    return render_template('index2.html', message='test', Dog=all_data3)
 
 
 
