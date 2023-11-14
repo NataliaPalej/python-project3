@@ -149,6 +149,69 @@ def index2():
     return render_template('index2.html', message='test', Dog=all_data3)
 
 
+###################################################
+##              INCREMENT METHOD                 ##
+###################################################
+def increment(dog, attribute):
+    try:
+        value = int(request.form[attribute])
+        setattr(dog, attribute, value + 1)
+        db.session.commit()
+        flash(f'{attribute.capitalize()} incremented successfully for {dog.name}!')
+    except Exception as e:
+        print(f"increment() error: {str(e)}")
+        flash(f'Flash increment() error\n'
+              f'Error incrementing {attribute} for {dog.name}', 'error')
+###################################################
+##           INCREMENT METHOD ENDS               ##
+###################################################
+
+@app.route('/increment_age', methods=['GET', 'POST'])
+def increment_age():
+    searchName = 'abc'
+    if request.method == 'POST':
+        dog_name = request.form.get('name')
+        if not dog_name:
+            print("increment_age() error")
+            flash('Flash increment_age() error\n'
+                  'Please enter the dog\'s name to increment age', 'error')
+            return redirect(url_for('show_all'))
+
+        try:
+            dog = get_dog_by_name(dog_name)
+            increment(dog, 'age')
+            return redirect(url_for('show_all'))
+        except Exception as e:
+            print(f"increment_age() error: {str(e)}")
+            flash('Flash increment_age() error', 'error')
+            return redirect(url_for('show_all'))
+
+    searchDog = global_dog
+    return render_template('increment_age2.html', dog=searchDog)
+
+@app.route('/increment_competitions', methods=['GET', 'POST'])
+def increment_competitions():
+    searchName = 'abc'
+    if request.method == 'POST':
+        dog_name = request.form.get('name')
+        if not dog_name:
+            print("increment_competitions() error")
+            flash('Flash increment_competitions() error\n'
+                  'Please enter the dog\'s name to increment competitions', 'error')
+            return redirect(url_for('show_all'))
+
+        try:
+            dog = get_dog_by_name(dog_name)
+            increment(dog, 'competitions')
+            return redirect(url_for('show_all'))
+        except Exception as e:
+            print(f"increment_competitions() error: {str(e)}")
+            flash('Flash increment_competitions() error', 'error')
+            return redirect(url_for('show_all'))
+
+    searchDog = global_dog
+    return render_template('increment_competitions2.html', dog=searchDog)
+
 
 if __name__ == '__main__':
     server_port = os.environ.get('PORT', '8080')
