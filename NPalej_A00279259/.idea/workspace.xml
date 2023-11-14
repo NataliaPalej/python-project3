@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fc561828-75a6-472f-9dda-c46eaff8a505" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/static/images/add.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/background3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/background4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/delete.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/iconPerson.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/iconPet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/index.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/login.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/logout.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/update.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/get_all.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/update2.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2YBD6Rc0sF5b81ACFpjFH0HO3Z6" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "com.google.cloudcode.ide_session_index": "20231114_0000",
+    "last_opened_file_path": "C:/Users/Palej/OneDrive/Desktop/Software Design with AI for Cloud/Year_3/software-dev-cloud-labs/Assessment/python-project3/NPalej_A00279259/static/images",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Palej\OneDrive\Desktop\Software Design with AI for Cloud\Year_3\software-dev-cloud-labs\Assessment\python-project3\NPalej_A00279259\static\images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Palej\OneDrive\Desktop\Software Design with AI for Cloud\Year_3\software-dev-cloud-labs\Assessment\python-project3\NPalej_A00279259\static" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Cloud Code: Cloud Run.Cloud Run: Run Locally">
+    <configuration name="Cloud Run: Deploy" type="CloudCodeCloudRunConfigurationType" factoryName="CloudCodeCloudDeployRunConfigurationFactory" show_console_on_std_err="false" show_console_on_std_out="false" imageBuilder="{&quot;name&quot;:&quot;Docker&quot;,&quot;payload&quot;:{&quot;path&quot;:&quot;Dockerfile&quot;}}" gcbSettings="{}">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="buildEnvironment" value="Local" />
+      <option name="buildpacksEnv" />
+      <option name="cloudSqlConnections" />
+      <option name="concurrency" value="80" />
+      <option name="cpuAllocated" value="1" />
+      <option name="dockerBuildArgs" />
+      <option name="dockerTarget" />
+      <option name="environmentVariables" />
+      <option name="imagePath" />
+      <option name="loadingAvailableBuilders" value="false" />
+      <option name="managedAuthentication" value="ALLOW_UNAUTHENTICATED" />
+      <option name="managedRegion" value="us-central1" />
+      <option name="maxInstances" value="1000" />
+      <option name="memoryAllocated" value="MIB_256" />
+      <option name="platform" value="FULLY_MANAGED" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="serviceAccount" />
+      <option name="serviceName" value="npalej-a00279259" />
+      <option name="timeout" value="300" />
+      <option name="vpcConnector" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Cloud Run: Run Locally" type="CloudCodeCloudRunConfigurationType" factoryName="CloudCodeCloudRunDevelopConfigurationFactory" show_console_on_std_err="false" show_console_on_std_out="false" imageBuilder="{&quot;name&quot;:&quot;Docker&quot;,&quot;payload&quot;:{&quot;path&quot;:&quot;Dockerfile&quot;}}">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="buildpacksEnv" />
+      <option name="cloudSqlConnections" />
+      <option name="cpuAllocated" value="NO_LIMIT" />
+      <option name="dockerBuildArgs" />
+      <option name="dockerTarget" />
+      <option name="environmentVariables" />
+      <option name="loadingAvailableBuilders" value="false" />
+      <option name="mappings">
+        <list />
+      </option>
+      <option name="memoryAllocated" value="MIB_256" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="serviceAccount" />
+      <option name="serviceName" value="npalej-a00279259" />
+      <option name="skaffoldWatchMode" value="ON_DEMAND" />
+      <method v="2" />
+    </configuration>
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="NPalej_A00279259" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.app" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fc561828-75a6-472f-9dda-c46eaff8a505" name="Changes" comment="" />
+      <created>1699989904400</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1699989904400</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" >
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<!-- Title -->
+<title>Natalia Palej A00279259</title>
+
+<style>
+	.background{
+		background-image: url("{{ url_for('static', filename='images/update.jpg') }}");
+  		background-repeat: no-repeat;
+  		background-attachment: fixed;
+  		background-size: cover;
+		align-items: center;
+		height: 90vh;
+		margin: 0;
+		}
+</style>
+
+</head>
+
+<body class="background">
+<h1 class="w3-allerta">Update Your Doggie</h1>
+
+<h4 class="w3-margin"><span class="raleway">{{Dog.owner}}</span>,
+you can update your dog, <span class="raleway">{{Dog.name}}</span>, here.</h4>
+
+<div class="w3-margin">
+	<form method = "post" action="UpdateServlet" class="w3-margin">
+        <label class="label-white">Dog Name:</label>
+		<input class="w3-input w3-animate-input input" type="text" name="name"
+			   value='{{Dog.name}}' />
+		<br>
+		<label class="label-white">Age:</label>
+		<input class="w3-input w3-animate-input input" type="text" name="age"
+			   value='{{Dog.age}}' />
+		<br>
+		<label class="label-white">Sex:</label>
+		<input class="w3-input w3-animate-input input" type="text" name="breed"
+			   value='{{Dog.sex}}' />
+		<br>
+		<label class="label-white">Breed:</label>
+		<input class="w3-input w3-animate-input input" type="text" name="colour"
+			   value='{{Dog.breed}}' />
+		<br>
+        <label class="label-white">Colour: </label>
+		<input class="w3-input w3-animate-input input" type="text" name="maintenance"
+			   value='{{Dog.colour}}' />
+		<br>
+		<label class="label-white">Activity Level:</label>
+		<input class="w3-input w3-animate-input input" type="text" name="activity"
+			  value='{{Dog.activity}}' />
+		<br>
+		<label class="label-white">Maintenance: </label>
+		<input class="w3-input w3-animate-input input" type="text" name="maintenance"
+			   value='{{Dog.maintenance}}' />
+		<br>
+        <label class="label-white">Competitions: </label>
+		<input class="w3-input w3-animate-input input" type="text" name="maintenance"
+			   value='{{Dog.competitions}}' />
+		<br>
+        <label class="label-white">Disqualified: </label>
+		<input class="w3-input w3-animate-input input" type="text" name="maintenance"
+			   value='{{Dog.disqualified}}' />
+		<br>
+		<input type="submit" value="Update" class="button w3-left"/>
+
+		<br>
+		<br>
+		<br>
+		<br>
+
+	</form>
+
+	<a href = "{{ url_for('index2') }}" class="button w3-left w3-pink">Back</a>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+</div>
+
+
+
+
+<footer>
+	<p>Natalia Palej&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student No: A00279259<br>
+	Email: <a href="mailto:A00279259@student.tus.ie">A00279259@student.tus.ie</a></p>
+</footer>
+</body>
+</html>
