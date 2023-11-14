@@ -148,7 +148,6 @@ def index2():
     all_data3 = db.session.query(Dog).all()
     return render_template('index2.html', message='test', Dog=all_data3)
 
-
 ###################################################
 ##              INCREMENT METHOD                 ##
 ###################################################
@@ -211,6 +210,61 @@ def increment_competitions():
 
     searchDog = global_dog
     return render_template('increment_competitions2.html', dog=searchDog)
+
+@app.route('/add', methods=['GET', 'POST'])
+def add():
+    if request.method == 'POST':
+        # Validate that all required form fields are present
+        try:
+            # Validate that all required form fields are present
+            required_fields = ['owner', 'name', 'age', 'sex', 'breed', 'colour', 'activity', 'maintenance',
+                               'competitions', 'disqualified']
+            for field in required_fields:
+                if not request.form.get(field):
+                    print("add() error, all fields must be filled")
+                    flash(f'Flash add() error\nPlease enter {field}', 'error')
+                    return redirect(url_for('add'))
+
+            # Convert age and competitions to integers
+            try:
+                age = int(request.form['age'])
+                competitions = int(request.form['competitions'])
+            except ValueError:
+                flash('Age and Competitions must be positive numbers', 'error')
+                return redirect(url_for('add'))
+
+            # Check if age and competitions positive
+            if age < 0 or competitions < 0:
+                flash('Age and Competitions must be positive numbers', 'error')
+                return redirect(url_for('add'))
+
+            # Create new Dog instance
+            dog = Dog(
+                owner=request.form['owner'],
+                name=request.form['name'],
+                age=age,
+                sex=request.form['sex'],
+                breed=request.form['breed'],
+                color=request.form['colour'],
+                activity=request.form['activity'],
+                maintenance=request.form['maintenance'],
+                competitions=competitions,
+                disqualified=request.form['disqualified']
+            )
+
+            # Add new dog to the database
+            db.session.add(dog)
+            db.session.commit()
+
+            flash('Dog {0} added successfully!'.format(dog.name))
+            return redirect(url_for('show_all'))
+        except Exception as e:
+            # Print error message
+            print(f"add() error: {str(e)}")
+            flash('flash add() error:', 'error')
+            return redirect(url_for('add'))
+
+    return render_template('add.html')
 
 
 if __name__ == '__main__':
