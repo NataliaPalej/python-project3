@@ -148,6 +148,49 @@ def index2():
     all_data3 = db.session.query(Dog).all()
     return render_template('index2.html', message='test', Dog=all_data3)
 
+@app.route('/delete2', methods=['GET', 'POST'])
+def delete2():
+    searchName = 'abc'
+    if request.method == 'POST':
+        if not request.form['name']:
+            print("delete2() error")
+            flash('Flash delete2() error\nPlease enter dogs name', 'error')
+        else:
+            searchName = request.form['name']
+            dog = db.session.query(Dog).filter(Dog.name == searchName).first()
+            db.session.delete(dog)
+            db.session.commit()
+            return redirect(url_for('show_all'))
+
+    searchDog = global_dog
+    return render_template('delete2.html', dog=searchDog)
+
+@app.route('/update2', methods=['GET', 'POST'])
+def update2():
+    searchName = 'abc'
+    if request.method == 'POST':
+        if not request.form['name']:
+            print("update2() error")
+            flash('Flash update2() error\nPlease enter dogs name to update', 'error')
+        else:
+            updateName = request.form['name']
+            dog = db.session.query(Dog).filter(Dog.name == updateName).first()
+            dog.owner = request.form['owner']
+            dog.name = request.form['name']
+            dog.breed = request.form['breed']
+            dog.colour = request.form['colour']
+            dog.activity = request.form['activity']
+            dog.maintenance = request.form['maintenance']
+            dog.competitions = request.form['competitions']
+            dog.disqualified = request.form['disqualified']
+            db.session.commit()
+
+            print('Dog {0} was successfully updated'.format(dog.name))
+            return redirect(url_for('show_all'))
+    searchDog = global_dog
+
+    return render_template('update2.html', dog=searchDog)
+
 ###################################################
 ##              INCREMENT METHOD                 ##
 ###################################################
