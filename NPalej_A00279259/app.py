@@ -82,7 +82,7 @@ def index2():
             else:
                 searchOwner = request.form['owner']
                 dogsList = db.session.query(Dog).filter(Dog.owner == searchOwner).all()
-                return render_template('show_all.html', message='Test', Dog=dogsList)
+                return render_template('get_all.html', message='Test', Dog=dogsList)
 
         elif 'Search_By_Name' in request.form:
             if not request.form['name']:
@@ -175,7 +175,7 @@ def delete2():
             dog = db.session.query(Dog).filter(Dog.name == searchName).first()
             db.session.delete(dog)
             db.session.commit()
-            return redirect(url_for('show_all'))
+            return redirect(url_for('get_all'))
 
     searchDog = global_dog
     return render_template('delete2.html', dog=searchDog)
@@ -205,7 +205,7 @@ def update2():
             db.session.commit()
 
             print('Dog {0} was successfully updated'.format(dog.name))
-            return redirect(url_for('show_all'))
+            return redirect(url_for('get_all'))
     searchDog = global_dog
 
     return render_template('update2.html', dog=searchDog)
@@ -236,16 +236,16 @@ def increment_age():
             print("increment_age() error")
             flash('Flash increment_age() error\n'
                   'Please enter the dog\'s name to increment age', 'error')
-            return redirect(url_for('show_all'))
+            return redirect(url_for('get_all'))
 
         try:
             dog = get_dog_by_name(dog_name)
             increment(dog, 'age')
-            return redirect(url_for('show_all'))
+            return redirect(url_for('get_all'))
         except Exception as e:
             print(f"increment_age() error: {str(e)}")
             flash('Flash increment_age() error', 'error')
-            return redirect(url_for('show_all'))
+            return redirect(url_for('get_all'))
 
     searchDog = global_dog
     return render_template('increment_age2.html', dog=searchDog)
@@ -263,16 +263,16 @@ def increment_competitions():
             print("increment_competitions() error")
             flash('Flash increment_competitions() error\n'
                   'Please enter the dog\'s name to increment competitions', 'error')
-            return redirect(url_for('show_all'))
+            return redirect(url_for('get_all'))
 
         try:
             dog = get_dog_by_name(dog_name)
             increment(dog, 'competitions')
-            return redirect(url_for('show_all'))
+            return redirect(url_for('get_all'))
         except Exception as e:
             print(f"increment_competitions() error: {str(e)}")
             flash('Flash increment_competitions() error', 'error')
-            return redirect(url_for('show_all'))
+            return redirect(url_for('get_all'))
 
     searchDog = global_dog
     return render_template('increment_competitions2.html', dog=searchDog)
@@ -281,10 +281,10 @@ def increment_competitions():
 ###################################################
 ##                GET ALL METHOD                 ##
 ###################################################
-@app.route('/show_all', methods=['GET', 'POST'])
-def show_all():
+@app.route('/get_all', methods=['GET', 'POST'])
+def get_all():
     all_data3 = db.session.query(Dog).all()
-    return render_template('show_all.html', message='test', Dog=all_data3)
+    return render_template('get_all.html', message='test', Dog=all_data3)
 
 
 ###################################################
@@ -354,7 +354,7 @@ def add():
             db.session.commit()
 
             flash('Dog {0} added successfully!'.format(dog.name))
-            return redirect(url_for('show_all'))
+            return redirect(url_for('get_all'))
         except Exception as e:
             # Print error message
             print(f"add() error: {str(e)}")
