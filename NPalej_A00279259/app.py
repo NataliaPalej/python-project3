@@ -16,7 +16,7 @@ class Dog(db.Model):
     owner = db.Column(db.String(25))
     name = db.Column(db.String(25))
     age = db.Column(db.Integer)
-    gender = db.Column(db.String(25))
+    sex = db.Column(db.String(25))
     breed = db.Column(db.String(15))
     color = db.Column(db.String(25))
     activity = db.Column(db.String(25))
