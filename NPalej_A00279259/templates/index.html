@@ -72,8 +72,8 @@
 			<div class="w3-margin">
 				<form method="post" action="{{ url_for('selected_dog') }}">
 					<label for="selectDog">Select dog to update/delete:</label>
-						<select name="name" id="selectDog" style="width: 200px;" >
-							{% for dog in Dog %}
+						<select name="selected_dog_name" id="selectDog" style="width: 200px;" >
+							{% for dog in dogs_list %}
 								<option value="{{ dog.name }}">{{ dog.name }}</option>
 							{% endfor %}
 						</select>
@@ -91,7 +91,7 @@
 		<div class="w3-bar-block">
 			<!-- INSERT dog -->
 			<div class="w3-bar-item">
-				<form method="post" action="{{ url_for('add') }}">
+				<form method="get" action="{{ url_for('add') }}">
 					<input type="submit" value="Add New Dog" class="menuType" />
 				</form>
 			</div>
@@ -100,6 +100,13 @@
 			<div class="w3-bar-item">
 				<form method="get" action="{{ url_for('get_all') }}">
 					<input type="submit" value="See Other Dogs" class="menuType" />
+				</form>
+			</div>
+
+			<!-- UPDATE USER DETAILS -->
+			<div class="w3-bar-item">
+				<form method="post" action="{{ url_for('update_user') }}">
+					<input type="submit" value="Update User Details" class="menuType" />
 				</form>
 			</div>
 		</div>

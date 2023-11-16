@@ -213,6 +213,7 @@ def index():
 def selected_dog():
     selected_dog_name = request.form.get('selected_dog_name')
     user_choice = request.form.get('userChoice')
+
     # Fetch user details
     user_id = session.get('user_id')
     user = db.session.query(User).get(user_id)
@@ -254,31 +255,30 @@ def delete_dog(dog_name):
 ###################################################
 @app.route('/update_dog/<dog_name>', methods=['GET', 'POST'])
 def update_dog(dog_name):
-    # Fetch the dog from based on dogs name
-    dog = db.session.query(Dog).filter(Dog.name == dog_name).first()
     # Fetch user details
     user_id = session.get('user_id')
     user = db.session.query(User).get(user_id)
+    dog = db.session.query(Dog).filter(Dog.name == dog_name).first()
 
     if request.method == 'POST':
+        updated_dog = db.session.query(Dog).filter(Dog.name == dog_name).first()
         try:
             # Validate form data
             age = int(request.form['age'])
             competitions = int(request.form['competitions'])
 
-            dog.user = request.form['user']
-            dog.name = request.form['name']
-            dog.age = age
-            dog.breed = request.form['breed']
-            dog.colour = request.form['colour']
-            dog.activity = request.form['activity']
-            dog.maintenance = request.form['maintenance']
-            dog.competitions = competitions
-            dog.disqualified = request.form['disqualified']
+            updated_dog.name = request.form['name']
+            updated_dog.age = age
+            updated_dog.breed = request.form['breed']
+            updated_dog.colour = request.form['colour']
+            updated_dog.activity = request.form['activity']
+            updated_dog.maintenance = request.form['maintenance']
+            updated_dog.competitions = competitions
+            updated_dog.disqualified = request.form['disqualified']
             db.session.commit()
 
-            print('Dog {0} was successfully updated'.format(dog.name))
-            flash('Dog {0} was successfully updated'.format(dog.name), 'success')
+            print('Dog {0} was successfully updated'.format(updated_dog.name))
+            flash('Dog {0} was successfully updated'.format(updated_dog.name), 'success')
             return redirect(url_for('index'))
         except Exception as e:
             flash('Error updating dog {0}: {1}'.format(dog_name, str(e)), 'error')
@@ -288,10 +288,10 @@ def update_dog(dog_name):
 
 @app.route('/update_user', methods=['GET', 'POST'])
 def update_user():
+    # Fetch user
+    user_id = session.get('user_id')
+    user = db.session.query(User).get(user_id)
     if request.method == 'POST':
-        # Fetch user
-        user_id = session.get('user_id')
-        user = db.session.query(User).get(user_id)
         try:
             user.user = request.form['user']
             user.user_email = request.form['user_email']

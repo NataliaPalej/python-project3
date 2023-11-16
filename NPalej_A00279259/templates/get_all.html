@@ -27,9 +27,6 @@
 	<body class="background">
 		<h1 class="w3-allerta">All Dogs</h1>
 		<br>
-		{%- for message in get_flashed_messages() %}
-				 {{ message }}
-		{%- endfor %}
 
 		<h4><span class="raleway">{{user.user}}</span>, here's list of all dogs registered in the app:</h4>
 		<br>
@@ -52,9 +49,9 @@
 				</tr>
 				</thead>
 				<tbody>
-				{% for dog in Dog %}
+				{% for dog in dogs %}
 				<tr>
-					<td>{{ Dog.user }}</td>
+					<td>{{ dog.user.user }}</td>
 					<td>{{ dog.name }}</td>
 					<td>{{ dog.age }}</td>
 					<td>{{ dog.sex }}</td>
