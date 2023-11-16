@@ -310,66 +310,33 @@ def update_user():
 ###################################################
 #               INCREMENT METHOD                  #
 ###################################################
-def increment(dog, attribute):
-    try:
-        value = int(request.form[attribute])
-        setattr(dog, attribute, value + 1)
+@app.route('/update_value/<int:dog_id>/<field>', methods=['POST'])
+def update_value(dog_id, field):
+    # Fetch the dog based on ID
+    dog = db.session.query(Dog).filter(Dog.id == dog_id).first()
+    user_id = session.get('user_id')
+    user = db.session.query(User).get(user_id)
+
+    if dog:
+        if field == 'age':
+            if request.form.get('choice') == 'increment':
+                dog.age += 1
+                flash('{0}\' age was successfully stepped up'.format(dog.name), 'success')
+            elif request.form.get('choice') == 'decrement':
+                dog.age -= 1
+                flash('{0}\' age was successfully stepped down'.format(dog.name), 'success')
+        elif field == 'competitions':
+            if request.form.get('choice') == 'increment':
+                dog.competitions += 1
+            elif request.form.get('choice') == 'decrement':
+                dog.competitions -= 1
+
         db.session.commit()
-        flash(f'{attribute.capitalize()} incremented successfully for {dog.name}!')
-    except Exception as e:
-        print(f"increment() error: {str(e)}")
-        flash(f'Flash increment() error\n'
-              f'Error incrementing {attribute} for {dog.name}', 'error')
-
-
-###################################################
-#             INCREMENT AGE METHOD                #
-###################################################
-# @app.route('/increment_age', methods=['GET', 'POST'])
-# def increment_age():
-#     if request.method == 'POST':
-#         dog_name = request.form.get('name')
-#         if not dog_name:
-#             print("increment_age() error")
-#             flash('Flash increment_age() error\n'
-#                   'Please enter the dog\'s name to increment age', 'error')
-#             return redirect(url_for('get_all'))
-#
-#         try:
-#             dog = get_dog_by_name(dog_name)
-#             increment(dog, 'age')
-#             return redirect(url_for('get_all'))
-#         except Exception as e:
-#             print(f"increment_age() error: {str(e)}")
-#             flash('Flash increment_age() error', 'error')
-#             return redirect(url_for('get_all'))
-#
-#     return render_template('increment_age2.html', dog=)
-
-
-###################################################
-#        INCREMENT COMPETITIONS METHOD            #
-###################################################
-# @app.route('/increment_competitions', methods=['GET', 'POST'])
-# def increment_competitions():
-#     if request.method == 'POST':
-#         dog_name = request.form.get('name')
-#         if not dog_name:
-#             print("increment_competitions() error")
-#             flash('Flash increment_competitions() error\n'
-#                   'Please enter the dog\'s name to increment competitions', 'error')
-#             return redirect(url_for('get_all'))
-#
-#         try:
-#             dog = get_dog_by_name(dog_name)
-#             increment(dog, 'competitions')
-#             return redirect(url_for('get_all'))
-#         except Exception as e:
-#             print(f"increment_competitions() error: {str(e)}")
-#             flash('Flash increment_competitions() error', 'error')
-#             return redirect(url_for('get_all'))
-#
-#     return render_template('increment_competitions2.html', dog=dog)
+        dogs_list = db.session.query(Dog).all()
+        return render_template('index.html', dogs_list=dogs_list, user=user)
+    else:
+        flash('Dog not found', 'error')
+        return redirect(url_for('index'))
 
 
 ###################################################
