@@ -28,15 +28,20 @@
 		<h1 class="w3-allerta">My Dog Details</h1>
 		<br>
 
+		{%- for message in get_flashed_messages(with_categories = true) %}
+				 <div class="alert alert-danger">
+					{{ message }}
+				 </div>
+		{%- endfor %}
+
 		<div class="w3-container">
-			<h3 class="w3-half">
+			<h3>
 				Hello, <span class="raleway">{{user.user}}</span>!
 			</h3>
 		</div>
 
-		<br>
 		<!-- Dog Details -->
-		<div class="w3-margin w3-padding w3-center" style="width: 50%">
+		<div class="w3-margin w3-padding w3-center">
 			<table class="w3-table table w3-hoverable">
 				<thead>
 					<tr>
@@ -51,17 +56,37 @@
 					  <th>Disqualified</th>
 					</tr>
 				</thead>
-			  <tbody>
+			  <tbody class="w3-center">
 			  {% for dog in dogs_list %}
 				<tr>
 				  <td>{{ dog.name }}</td>
-				  <td>{{ dog.age }}</td>
+				  <td>
+					  <form action="{{ url_for('update_value', dog_id=dog.id, field='age')}}"
+							method="post" style="display: inline-block;">
+                      	<input type="submit" name="choice" value="-" class="choice">
+					  </form>
+					  {{ dog.age }}
+					  <form action="{{ url_for('update_value', dog_id=dog.id, field='age')}}"
+							method="post" style="display: inline-block;">
+                      	<input type="submit" name="choice" value="+" class="choice">
+					  </form>
+				  </td>
 				  <td>{{ dog.sex }}</td>
 				  <td>{{ dog.breed }}</td>
 				  <td>{{ dog.colour }}</td>
 				  <td>{{ dog.activity }}</td>
 				  <td>{{ dog.maintenance }}</td>
-				  <td>{{ dog.competitions }}</td>
+				  <td>
+					  <form action="{{ url_for('update_value', dog_id=dog.id, field='competitions') }}"
+							method="post" style="display: inline-block;">
+                      <input type="submit" name="choice" value="-" class="choice w3-pink">
+					  </form>
+					  {{ dog.competitions }}
+					  <form action="{{ url_for('update_value', dog_id=dog.id, field='competitions') }}"
+							method="post" style="display: inline-block;">
+                      <input type="submit" name="choice" value="+" class="choice">
+					  </form>
+				  </td>
 				  <td>{{ dog.disqualified }}</td>
 				</tr>
 			  {% endfor %}
@@ -105,7 +130,7 @@
 
 			<!-- UPDATE USER DETAILS -->
 			<div class="w3-bar-item">
-				<form method="post" action="{{ url_for('update_user') }}">
+				<form method="get" action="{{ url_for('update_user') }}">
 					<input type="submit" value="Update User Details" class="menuType" />
 				</form>
 			</div>

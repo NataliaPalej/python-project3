@@ -39,7 +39,7 @@ h4 {
 
 .table {
 	border-width: 0.5px;
-  	border-style: solid;
+  	border-style: none;
   	border-color: #C8C2CB;
 	background-color: white;
 	opacity: 85%;
@@ -158,4 +158,19 @@ input[type="submit"]:hover {
 
 .card {
 	border-color: #4A235A;
+}
+
+.choice {
+    width: 25px;
+    border-radius: 8px;
+    background-color: #e44492;
+    color: white;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
+.choice:hover {
+    background-color: #d4d1d6;
+    color: black;
 }

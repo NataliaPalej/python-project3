@@ -29,6 +29,12 @@
 				<h2>Hope to see you again...</h2>
 			</div>
 
+		{%- for message in get_flashed_messages(with_categories = true) %}
+				 <div class="alert alert-danger">
+					{{ message }}
+				 </div>
+		{%- endfor %}
+
 			<div class="w3-padding w3-container w3-center ">
 				<form method = "post" action="{{ url_for('login') }}">
 					<input type="submit" value="Login Page" class="button"/>

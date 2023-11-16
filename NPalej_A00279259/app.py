@@ -314,29 +314,28 @@ def update_user():
 def update_value(dog_id, field):
     # Fetch the dog based on ID
     dog = db.session.query(Dog).filter(Dog.id == dog_id).first()
-    user_id = session.get('user_id')
-    user = db.session.query(User).get(user_id)
+    user_choice = request.form.get('choice')
 
     if dog:
         if field == 'age':
-            if request.form.get('choice') == 'increment':
+            if user_choice == '+':
                 dog.age += 1
                 flash('{0}\' age was successfully stepped up'.format(dog.name), 'success')
-            elif request.form.get('choice') == 'decrement':
+            elif user_choice == '-':
                 dog.age -= 1
                 flash('{0}\' age was successfully stepped down'.format(dog.name), 'success')
-        elif field == 'competitions':
-            if request.form.get('choice') == 'increment':
-                dog.competitions += 1
-            elif request.form.get('choice') == 'decrement':
-                dog.competitions -= 1
 
+        if field == 'competitions':
+            if user_choice == '+':
+                dog.competitions += 1
+                flash('{0}\' competitions number was successfully stepped up'.format(dog.name), 'success')
+            elif user_choice == '-':
+                dog.competitions -= 1
+                flash('{0}\' competitions number was successfully stepped down'.format(dog.name), 'success')
         db.session.commit()
-        dogs_list = db.session.query(Dog).all()
-        return render_template('index.html', dogs_list=dogs_list, user=user)
-    else:
-        flash('Dog not found', 'error')
         return redirect(url_for('index'))
+    else:
+        flash('update_value() error dog {0} {1} doesnt exist'.format(dog_id, dog.name), 'error')
 
 
 ###################################################

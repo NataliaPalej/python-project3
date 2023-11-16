@@ -40,12 +40,11 @@
         it's sad to see your dog
         <span class="raleway">{{dog.name}}</span> gone...<br>Are you sure you want to delete your dog?</h4>
 
-    <!-- Add a hidden form -->
+    <!-- Hidden form -->
     <form method="post" action="{{ url_for('delete_dog', dog_name=dog.name) }}" id="deleteForm" style="display: none;">
     </form>
 
     <input type="button" value="BACK" class="w3-left inputSubmit" onclick="window.location='{{ url_for('index') }}';" />
-    <!-- Add the onclick event to trigger the confirmDelete function -->
     <input type="button" value="Delete" class="w3-left inputSubmit" onclick="confirmDelete()" />
 
     <footer>
