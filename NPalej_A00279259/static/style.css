@@ -45,7 +45,7 @@ h4 {
 	opacity: 85%;
 }
 
-.w3-hoverable tbody tr:hover {
+.hovertable tr:hover {
     background-color: #4A235A;
     color: white;
 }
@@ -166,11 +166,10 @@ input[type="submit"]:hover {
     background-color: #e44492;
     color: white;
     text-align: center;
-    transition: background-color 0.3s, color 0.3s;
+    transition: color 0.3s, background-color 0.3s;
     cursor: pointer;
 }
-
 .choice:hover {
-    background-color: #d4d1d6;
+    background-color: white;
     color: black;
 }

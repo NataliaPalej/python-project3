@@ -263,17 +263,11 @@ def update_dog(dog_name):
     if request.method == 'POST':
         updated_dog = db.session.query(Dog).filter(Dog.name == dog_name).first()
         try:
-            # Validate form data
-            age = int(request.form['age'])
-            competitions = int(request.form['competitions'])
-
             updated_dog.name = request.form['name']
-            updated_dog.age = age
             updated_dog.breed = request.form['breed']
             updated_dog.colour = request.form['colour']
             updated_dog.activity = request.form['activity']
             updated_dog.maintenance = request.form['maintenance']
-            updated_dog.competitions = competitions
             updated_dog.disqualified = request.form['disqualified']
             db.session.commit()
 

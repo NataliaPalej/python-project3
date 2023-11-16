@@ -79,7 +79,7 @@
 				  <td>
 					  <form action="{{ url_for('update_value', dog_id=dog.id, field='competitions') }}"
 							method="post" style="display: inline-block;">
-                      <input type="submit" name="choice" value="-" class="choice w3-pink">
+                      <input type="submit" name="choice" value="-" class="choice">
 					  </form>
 					  {{ dog.competitions }}
 					  <form action="{{ url_for('update_value', dog_id=dog.id, field='competitions') }}"
