@@ -1,6 +1,3 @@
-"""
-A sample Hello World server.
-"""
 import os
 from flask import Flask, request, flash, url_for, redirect, session, render_template, get_flashed_messages
 from flask_sqlalchemy import SQLAlchemy
@@ -58,12 +55,44 @@ class Dog(db.Model):
         self.disqualified = disqualified
 
 
-# Order in which tables are created, user first and then dog
-db.create_all()
+def create_tables():
+    db.create_all()
 
-# Ensure index2, delete2 & update2 are referencing the same dog
-global_user = None
-global_dog = None
+
+def add_initial_data():
+    # Check if the users already exist
+    natalia = User.query.filter_by(user_email='natalia@gmail.com').first()
+    if not natalia:
+        # Creating Users
+        natalia = User(user='Natalia', user_email='natalia@gmail.com', user_password='natalia')
+        monika = User(user='Monika', user_email='monika@gmail.com', user_password='monika')
+        dominik = User(user='Dominik', user_email='dominik@gmail.com', user_password='dominik')
+        kasia = User(user='Kasia', user_email='kasia@gmail.com', user_password='kasia')
+        adrian = User(user='Adrian', user_email='adrian@gmail.com', user_password='adrian')
+
+        db.session.add_all([natalia, monika, dominik, kasia, adrian])
+        db.session.commit()
+
+    # Check if the dogs already exist
+    lilly = Dog.query.filter_by(name='Lilly').first()
+    if not lilly:
+        # Creating Dogs
+        db.session.add(Dog(user_id=natalia.id, name='Lilly', age=3, sex='Female', breed='Yorkshire Terrier',
+                           colour='Tan-Silver', activity='High', maintenance='High', competitions=2,
+                           disqualified='No'))
+        db.session.add(Dog(user_id=monika.id, name='Gizmo', age=9, sex='Male', breed='Shi Tzu',
+                           colour='Black-White', activity='Low', maintenance='Medium', competitions=0,
+                           disqualified='No'))
+        db.session.add(Dog(user_id=dominik.id, name='Luna', age=3, sex='Female', breed='Cavapoo',
+                           colour='Light-Brown', activity='Medium', maintenance='Medium', competitions=1,
+                           disqualified='No'))
+        db.session.add(Dog(user_id=kasia.id, name='Coco', age=3, sex='Male', breed='Cockpoo',
+                           colour='Dark-Brown', activity='High', maintenance='Medium', competitions=2,
+                           disqualified='No'))
+        db.session.add(Dog(user_id=adrian.id, name='Lola', age=1, sex='Female', breed='Yorkshire Terrier',
+                           colour='Silver-Tan', activity='High', maintenance='Very High', competitions=0,
+                           disqualified='No'))
+        db.session.commit()
 
 
 ###################################################
@@ -122,7 +151,7 @@ def login():  # login page route
             session['user_id'] = user.id
             print("User {0} logged in successfully.".format(user.user))
             flash('Login successful !', 'success')
-            return redirect(url_for('index2'))
+            return redirect(url_for('index'))
         else:
             flash('Invalid email or password', 'error')
     elif 'Register' in request.form:
@@ -165,37 +194,36 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/index2', methods=['GET', 'POST'])
-def index2():
-    user_id = session.get('user_id')  # Assuming you store user ID in the session
-    dogs_list = db.session.query(Dog).filter(Dog.user_id == user_id).all()
+@app.route('/index', methods=['GET', 'POST'])
+def index():
+    user_id = session.get('user_id')
 
-    # if request.method == 'POST':
+    if user_id:
+        user = db.session.query(User).get(user_id)
+        if user:
+            dogs_list = db.session.query(Dog).filter(Dog.user_id == user_id).all()
+            return render_template('index.html', user=user, dogs_list=dogs_list)
 
-    return render_template('index2.html', message='200', Dog=dogs_list)
-
-
-###################################################
-#                SEARCH METHOD                    #
-###################################################
-
-@app.route('/search', methods=['GET', 'POST'])
-def search():
-    return render_template('search.html')
+    # If user is not logged in redirect to login page
+    flash('You need to log in to access this page', 'error')
+    return redirect(url_for('login'))
 
 
 @app.route('/selected_dog', methods=['POST'])
 def selected_dog():
     selected_dog_name = request.form.get('name')
     user_choice = request.form.get('userChoice')
+    # Fetch user details
+    user_id = session.get('user_id')
+    user = db.session.query(User).get(user_id)
 
     if user_choice == 'Update':
-        return redirect(url_for('update_dog', dog_name=selected_dog_name))
+        return redirect(url_for('update_dog', user=user, dog_name=selected_dog_name))
     elif user_choice == 'Delete':
-        return redirect(url_for('delete_dog', dog_name=selected_dog_name))
+        return redirect(url_for('delete_dog', user=user, dog_name=selected_dog_name))
     else:
         flash('Invalid action selected', 'error')
-        return redirect(url_for('index2'))
+        return redirect(url_for('index'))
 
 
 ###################################################
@@ -205,6 +233,9 @@ def selected_dog():
 def delete_dog(dog_name):
     # Fetch the dog from the database based on the provided name
     dog = db.session.query(Dog).filter(Dog.name == dog_name).first()
+    # Fetch user details
+    user_id = session.get('user_id')
+    user = db.session.query(User).get(user_id)
 
     if request.method == 'POST':
         try:
@@ -215,7 +246,7 @@ def delete_dog(dog_name):
         except Exception as e:
             flash('Error deleting dog {0}: {1}'.format(dog_name, str(e)), 'error')
 
-    return render_template('delete.html', dog=dog)
+    return render_template('delete.html', user=user, dog=dog)
 
 
 ###################################################
@@ -223,8 +254,11 @@ def delete_dog(dog_name):
 ###################################################
 @app.route('/update_dog/<dog_name>', methods=['GET', 'POST'])
 def update_dog(dog_name):
-    # Fetch the dog from the database based on the provided name
+    # Fetch the dog from based on dogs name
     dog = db.session.query(Dog).filter(Dog.name == dog_name).first()
+    # Fetch user details
+    user_id = session.get('user_id')
+    user = db.session.query(User).get(user_id)
 
     if request.method == 'POST':
         try:
@@ -242,11 +276,11 @@ def update_dog(dog_name):
 
             print('Dog {0} was successfully updated'.format(dog.name))
             flash('Dog {0} was successfully updated'.format(dog.name), 'success')
-            return redirect(url_for('index2'))
+            return redirect(url_for('index'))
         except Exception as e:
             flash('Error updating dog {0}: {1}'.format(dog_name, str(e)), 'error')
 
-    return render_template('update.html', dog=dog)
+    return render_template('update.html', user=user, dog=dog)
 
 
 ###################################################
@@ -267,53 +301,51 @@ def increment(dog, attribute):
 ###################################################
 #             INCREMENT AGE METHOD                #
 ###################################################
-@app.route('/increment_age', methods=['GET', 'POST'])
-def increment_age():
-    if request.method == 'POST':
-        dog_name = request.form.get('name')
-        if not dog_name:
-            print("increment_age() error")
-            flash('Flash increment_age() error\n'
-                  'Please enter the dog\'s name to increment age', 'error')
-            return redirect(url_for('get_all'))
-
-        try:
-            dog = get_dog_by_name(dog_name)
-            increment(dog, 'age')
-            return redirect(url_for('get_all'))
-        except Exception as e:
-            print(f"increment_age() error: {str(e)}")
-            flash('Flash increment_age() error', 'error')
-            return redirect(url_for('get_all'))
-
-    searchDog = global_dog
-    return render_template('increment_age2.html', dog=searchDog)
+# @app.route('/increment_age', methods=['GET', 'POST'])
+# def increment_age():
+#     if request.method == 'POST':
+#         dog_name = request.form.get('name')
+#         if not dog_name:
+#             print("increment_age() error")
+#             flash('Flash increment_age() error\n'
+#                   'Please enter the dog\'s name to increment age', 'error')
+#             return redirect(url_for('get_all'))
+#
+#         try:
+#             dog = get_dog_by_name(dog_name)
+#             increment(dog, 'age')
+#             return redirect(url_for('get_all'))
+#         except Exception as e:
+#             print(f"increment_age() error: {str(e)}")
+#             flash('Flash increment_age() error', 'error')
+#             return redirect(url_for('get_all'))
+#
+#     return render_template('increment_age2.html', dog=)
 
 
 ###################################################
 #        INCREMENT COMPETITIONS METHOD            #
 ###################################################
-@app.route('/increment_competitions', methods=['GET', 'POST'])
-def increment_competitions():
-    if request.method == 'POST':
-        dog_name = request.form.get('name')
-        if not dog_name:
-            print("increment_competitions() error")
-            flash('Flash increment_competitions() error\n'
-                  'Please enter the dog\'s name to increment competitions', 'error')
-            return redirect(url_for('get_all'))
-
-        try:
-            dog = get_dog_by_name(dog_name)
-            increment(dog, 'competitions')
-            return redirect(url_for('get_all'))
-        except Exception as e:
-            print(f"increment_competitions() error: {str(e)}")
-            flash('Flash increment_competitions() error', 'error')
-            return redirect(url_for('get_all'))
-
-    searchDog = global_dog
-    return render_template('increment_competitions2.html', dog=searchDog)
+# @app.route('/increment_competitions', methods=['GET', 'POST'])
+# def increment_competitions():
+#     if request.method == 'POST':
+#         dog_name = request.form.get('name')
+#         if not dog_name:
+#             print("increment_competitions() error")
+#             flash('Flash increment_competitions() error\n'
+#                   'Please enter the dog\'s name to increment competitions', 'error')
+#             return redirect(url_for('get_all'))
+#
+#         try:
+#             dog = get_dog_by_name(dog_name)
+#             increment(dog, 'competitions')
+#             return redirect(url_for('get_all'))
+#         except Exception as e:
+#             print(f"increment_competitions() error: {str(e)}")
+#             flash('Flash increment_competitions() error', 'error')
+#             return redirect(url_for('get_all'))
+#
+#     return render_template('increment_competitions2.html', dog=dog)
 
 
 ###################################################
@@ -321,15 +353,15 @@ def increment_competitions():
 ###################################################
 @app.route('/get_all', methods=['GET', 'POST'])
 def get_all():
-    all_data3 = db.session.query(Dog).all()
-    return render_template('get_all.html', message='test', Dog=all_data3)
+    all_dogs = Dog.query.all()
+    return render_template('get_all.html', Dog=all_dogs)
 
 
 ###################################################
 #          INITIAL TABLE DATA ROUTE               #
 ###################################################
-@app.route('/initial_table_data', methods=['GET', 'POST'])
-def initial_table_data():
+@app.route('/initial_data', methods=['GET', 'POST'])
+def initial_data():
     if request.method == 'POST':
         # Creating Users
         natalia = User(user='Natalia', user_email='natalia@gmail.com', user_password='natalia')
@@ -369,6 +401,16 @@ def initial_table_data():
 ###################################################
 @app.route('/add', methods=['GET', 'POST'])
 def add():
+    # Get the user ID from the session
+    user_id = session.get('user_id')
+    if not user_id:
+        print("add() error: user not logged in")
+        flash('add() error: User not logged in', 'error')
+        return redirect(url_for('login'))
+
+    # Retrieve user information for later use in rendering the template
+    user = db.session.query(User).get(user_id)
+
     if request.method == 'POST':
         try:
             # Validate that all required form fields are present
@@ -393,13 +435,6 @@ def add():
                 flash('Age and Competitions must be positive numbers', 'error')
                 return redirect(url_for('add'))
 
-            # Get the user ID from the session
-            user_id = session.get('user_id')
-            if not user_id:
-                print("add() error: user not logged in")
-                flash('add() error: User not logged in', 'error')
-                return redirect(url_for('login'))
-
             # Create new Dog instance
             new_dog = Dog(
                 user_id=user_id,
@@ -419,22 +454,23 @@ def add():
             db.session.commit()
 
             flash('Dog {0} added successfully!'.format(new_dog.name))
-            return redirect(url_for('get_all'))
+            return redirect(url_for('index'))
         except Exception as e:
             print(f"add() error: {str(e)}")
             flash('flash add() error:', 'error')
             return redirect(url_for('add'))
-    return render_template('add.html')
+    return render_template('add.html', user=user)
 
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    # Clear the session to log the user out
     session.clear()
-    # Redirect to the index or login page after logout
     return redirect(url_for('logout'))
 
 
 if __name__ == '__main__':
+    create_tables()
+    add_initial_data()
+
     server_port = os.environ.get('PORT', '8080')
     app.run(debug=False, port=server_port, host='0.0.0.0')
