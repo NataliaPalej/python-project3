@@ -11,6 +11,15 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <title>Natalia Palej A00279259</title>
 
+    <script>
+    function confirmDelete() {
+    var answer = confirm("Are you sure you want to delete this dog?");
+    if (answer) {
+        document.getElementById("deleteForm").submit();
+        }
+    }
+    </script>
+
     <style>
         .background{
             background-image: url("{{ url_for('static', filename='images/delete.jpg') }}");
@@ -29,11 +38,15 @@
     <h4 class="w3-margin">
         <span class="raleway">{{user.user}}</span>,
         it's sad to see your dog
-        <span class="raleway">{{dog.name}}</span> gone...</h4>
+        <span class="raleway">{{dog.name}}</span> gone...<br>Are you sure you want to delete your dog?</h4>
 
-    <form method = "post" action="{{ url_for('delete_dog', dog_name=dog.name) }}">
-        <input type="submit" value="BACK" class="w3-left inputSubmit"/>
+    <!-- Add a hidden form -->
+    <form method="post" action="{{ url_for('delete_dog', dog_name=dog.name) }}" id="deleteForm" style="display: none;">
     </form>
+
+    <input type="button" value="BACK" class="w3-left inputSubmit" onclick="window.location='{{ url_for('index') }}';" />
+    <!-- Add the onclick event to trigger the confirmDelete function -->
+    <input type="button" value="Delete" class="w3-left inputSubmit" onclick="confirmDelete()" />
 
     <footer>
         <p>Natalia Palej&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student No: A00279259<br>
