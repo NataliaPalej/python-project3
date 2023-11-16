@@ -1,74 +1,81 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="ISO-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <title>Natalia Palej A00279259</title>
 
-<head>
-<meta charset="ISO-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<!-- Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
-<!-- CSS -->
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-<title>Natalia Palej A00279259</title>
+        <style>
+            .background{
+                background-image: url("{{ url_for('static', filename='images/register.jpg') }}");
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+                }
+        </style>
+    </head>
 
-<style>
-	.background{
-		background-image: url("{{ url_for('static', filename='images/register.jpg') }}");
-  		background-repeat: no-repeat;
-  		background-attachment: fixed;
-  		background-size: cover;
-		}
-</style>
+        <body class="background">
+        <h1 class="w3-allerta">Register</h1>
 
-</head>
+        {%- for category, message in get_flashed_messages(with_categories = true) %}
+                 <div class = "alert alert-danger">
+                    {{ message }}
+                 </div>
+        {%- endfor %}
 
-<body class="background">
-<h1 class="w3-allerta">Register</h1>
+        <div class="w3-row">
+            <div class="w3-half w3-container w3-margin w3-padding">
+                <form method = "post" action="{{ request.path }}" class="w3-container w3-margin-top form">
+                    <label class="label" for="user">Owner Name: </label>
+                    <input type="text" name="user" class="inputText" placeholder = "Owner Name"/>
+                    <br>
+                    <label class="label" for="user_email">Owner Email: </label>
+                    <input type="text" name="user_email" class="inputText" placeholder = "email@gmail.com"/>
+                    <br>
+                    <label class="label" for="user_password">Owner Password: </label>
+                    <input type="text" name="user_password" class="inputText" placeholder = "********"/>
+                    <br>
+                    <input type="submit" value="Register" class="menuType" />
+                </form>
+            </div>
 
-{%- for category, message in get_flashed_messages(with_categories = true) %}
-         <div class = "alert alert-danger">
-            {{ message }}
-         </div>
-{%- endfor %}
+            <div class="w3-half w3-container w3-padding w3-center w3-card">
+                <h4>Active Members</h4>
+                <div class="w3-left w3-container w3-cell">
+                     <img src="{{ url_for('static', filename='images/iconPerson.png') }}" style="width: 60px; margin-right: 10px;"/>
+                </div>
+                <div class="w3-left w3-container w3-cell">
+                    <p>Users: {{ users_count }}</p>
+                </div>
 
-   <div class="w3-container w3-padding">
-       <form method = "post" action="{{ request.path }}" class="w3-container w3-margin-top form">
-         <label class="label" for="user">Owner Name: </label>
-         <input type="text" name="user" class="inputText" placeholder = "Owner Name"/>
-         <br>
-         <label class="label" for="user_email">Owner Email: </label>
-         <input type="text" name="user_email" class="inputText" placeholder = "email@gmail.com"/>
-         <br>
-         <label class="label" for="user_password">Owner Password: </label>
-         <input type="text" name="user_password" class="inputText" placeholder = "********"/>
-         <br>
-         <input type="submit" value="Register" class="menuType" />
-       </form>
-   </div>
+                <!-- Gap between owners and dogs -->
+                <div class="w3-left w3-container w3-cell"></div>
 
-<div class="w3-half w3-margin w3-padding w3-center w3-card">
-	<h4>Active Members</h4>
-	<div class="w3-left w3-container w3-cell">
-		 <img src="{{ url_for('static', filename='images/iconPerson.png') }}" style="width: 60px; margin-right: 10px;"/>
-	</div>
-	<div class="w3-left w3-container w3-cell">
-		<p>Owners: {{ owners_count }}</p>
-	</div>
+                <div class="w3-left w3-container w3-cell">
+                    <img src="{{ url_for('static', filename='images/iconPet.png') }}" style="width: 60px; margin-right: 10px;"/>
+                </div>
+                <div class="w3-left w3-container w3-cell">
+                    <p>Owners: {{ dogs_count }}</p>
+                </div>
+            </div>
+        </div>
 
-	<!-- Gap between owners and dogs -->
-	<div class="w3-left w3-container w3-cell"></div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
 
-	<div class="w3-left w3-container w3-cell">
-		<img src="{{ url_for('static', filename='images/iconPet.png') }}" style="width: 60px; margin-right: 10px;"/>
-	</div>
-	<div class="w3-left w3-container w3-cell">
-		<p>Owners: {{ dogs_count }}</p>
-	</div>
-</div>
-
-<footer class="w3-bottom">
-	<p>Natalia Palej&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student No: A00279259<br>
-	Email: <a href="mailto:A00279259@student.tus.ie">A00279259@student.tus.ie</a></p>
-</footer>
-</body>
+        <footer class="w3-bottom">
+            <p>Natalia Palej&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student No: A00279259<br>
+            Email: <a href="mailto:A00279259@student.tus.ie">A00279259@student.tus.ie</a></p>
+        </footer>
+    </body>
 </html>

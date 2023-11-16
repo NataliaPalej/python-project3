@@ -12,7 +12,6 @@
         <!-- TITLE -->
         <title>Natalia Palej A00279259</title>
 
-
         <style>
             .background{
                 background-image: url("{{ url_for('static', filename='images/add.jpg') }}");
@@ -27,50 +26,64 @@
         </style>
     </head>
 
-
-
    <body class="background">
-   <h1 class="w3-allerta">Add New Dog</h1>
+       <h1 class="w3-allerta">Add New Dog</h1>
+       <h3>Hello, <span class="raleway">{{user.user}}</span>! Here you can add new dog.</h3>
 
-   <h3>Please fill in all fields and click "Add" to save new dog.</h3>
+       {%- for category, message in get_flashed_messages(with_categories = true) %}
+             <div class = "alert alert-danger">
+                {{ message }}
+             </div>
+       {%- endfor %}
 
-   {%- for category, message in get_flashed_messages(with_categories = true) %}
-         <div class = "alert alert-danger">
-            {{ message }}
-         </div>
-   {%- endfor %}
+       <div class="w3-container w3-padding">
+           <form method = "post" action="{{ request.path }}" class="w3-container w3-margin-top form">
+               <label class="label" for = "name">Dog Name: </label>
+               <input type="text" name="name" class="inputText" placeholder = "Name"/>
+               <br>
+               <label class="label" for = "age">Age:</label>
+               <input type="text" name="age" class="inputText" placeholder = "Age"/>
+               <br>
+               <label class="label" for = "sex">Sex:</label>
+               <input type="text" name="sex" class="inputText" placeholder = "Sex"/>
+               <br>
+               <label class="label" for = "breed">Breed:</label>
+               <input type="text" name="breed" class="inputText" placeholder = "Breed"/>
+               <br>
+               <label class="label" for = "colour">Colour:</label>
+               <input type="text" name="colour" class="inputText" placeholder = "Colour"/>
+               <br>
+               <label class="label" for = "activity">Activity:</label>
+               <input type="text" name="activity" class="inputText" placeholder = "Activity"/>
+               <br>
+               <label class="label" for = "maintenance">Maintenance: </label>
+               <input type="text" name="maintenance" class="inputText" placeholder = "Maintenance"/>
+               <br>
+               <label class="label" for = "competitions">Competitions: </label>
+               <input type="text" name="competitions" class="inputText" placeholder = "Competitions"/>
+               <br>
+               <label class="label" for = "disqualified">Disqualified: </label>
+               <input type="text" name="disqualified" class="inputText" placeholder = "Disqualified"/>
+               <br>
+               <input type="submit" value="Add" class="menuType" />
+           </form>
 
-   <div class="w3-container w3-padding">
-       <form method = "post" action="{{ request.path }}" class="w3-container w3-margin-top form">
-           <label class="label" for = "name">Dog Name: </label>
-           <input type="text" name="name" class="inputText" placeholder = "Name"/>
-           <br>
-           <label class="label" for = "age">Age:</label>
-           <input type="text" name="age" class="inputText" placeholder = "Age"/>
-           <br>
-           <label class="label" for = "sex">Sex:</label>
-           <input type="text" name="sex" class="inputText" placeholder = "Sex"/>
-           <br>
-           <label class="label" for = "breed">Breed:</label>
-           <input type="text" name="breed" class="inputText" placeholder = "Breed"/>
-           <br>
-           <label class="label" for = "colour">Colour:</label>
-           <input type="text" name="colour" class="inputText" placeholder = "Colour"/>
-           <br>
-           <label class="label" for = "activity">Activity:</label>
-           <input type="text" name="activity" class="inputText" placeholder = "Activity"/>
-           <br>
-           <label class="label" for = "maintenance">Maintenance: </label>
-           <input type="text" name="maintenance" class="inputText" placeholder = "Maintenance"/>
-           <br>
-           <label class="label" for = "competitions">Competitions: </label>
-           <input type="text" name="competitions" class="inputText" placeholder = "Competitions"/>
-           <br>
-           <label class="label" for = "disqualified">Disqualified: </label>
-           <input type="text" name="disqualified" class="inputText" placeholder = "Disqualified"/>
-           <br>
-           <input type="submit" value="Add" class="menuType" />
-       </form>
-   </div>
+           <!-- BACK button -->
+           <a href = "{{ url_for('index') }}" class="button w3-left w3-pink">BACK</a>
+       </div>
+
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
+
+       <footer>
+           <p>Natalia Palej&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student No: A00279259<br>
+               Email: <a href="mailto:A00279259@student.tus.ie">A00279259@student.tus.ie</a></p>
+       </footer>
    </body>
 </html>

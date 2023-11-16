@@ -1,92 +1,92 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<!-- Fonts -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" >
+		<!-- CSS -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		<title>Natalia Palej A00279259</title>
 
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<!-- Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" >
-<!-- CSS -->
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-<title>Natalia Palej A00279259</title>
+		<style>
+			.background{
+				background-image: url("{{ url_for('static', filename='images/alldogs.jpg') }}");
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				background-size: cover;
+				align-items: center;
+				height: 15vh;
+				margin: 0;
+				}
+		</style>
+	</head>
 
-<style>
-	.background{
-		background-image: url("{{ url_for('static', filename='images/alldogs.jpg') }}");
-  		background-repeat: no-repeat;
-  		background-attachment: fixed;
-  		background-size: cover;
-		align-items: center;
-		height: 15vh;
-		margin: 0;
-		}
-</style>
+	<body class="background">
+		<h1 class="w3-allerta">All Dogs</h1>
+		<br>
+		{%- for message in get_flashed_messages() %}
+				 {{ message }}
+		{%- endfor %}
 
-</head>
+		<h4><span class="raleway">{{user.user}}</span>, here's list of all dogs registered in the app:</h4>
+		<br>
 
-<body class="background">
-<h1 class="w3-allerta">All Dogs</h1>
-<br>
+		<!-- ALL DOGS details -->
+		<div class="w3-container w3-center">
+			<table class="w3-table table w3-hoverable">
+				<thead>
+				<tr>
+					<th>Owner</th>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Sex</th>
+					<th>Breed</th>
+					<th>Colour</th>
+					<th>Activity</th>
+					<th>Maintenance</th>
+					<th>Competitions</th>
+					<th>Disqualified</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for dog in Dog %}
+				<tr>
+					<td>{{ dog.user }}</td>
+					<td>{{ dog.name }}</td>
+					<td>{{ dog.age }}</td>
+					<td>{{ dog.sex }}</td>
+					<td>{{ dog.breed }}</td>
+					<td>{{ dog.colour }}</td>
+					<td>{{ dog.activity }}</td>
+					<td>{{ dog.maintenance }}</td>
+					<td>{{ dog.competitions }}</td>
+					<td>{{ dog.disqualified }}</td>
+				</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			<br>
+			<br>
 
-{%- for message in get_flashed_messages() %}
-         {{ message }}
-{%- endfor %}
+			<!-- BACK button -->
+			<a href = "{{ url_for('index') }}" class="button w3-left w3-pink">BACK</a>
+		</div>
 
-<h4><span class="raleway">{{Dog.owner}}</span>, here's list of all dogs registered in the app:</h4>
-<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
 
-<!-- Dogs Details represented in table -->
-<div class="w3-container w3-center">
-	<table class="w3-table table w3-hoverable">
-		<thead>
-			<tr>
-                <th>Owner</th>
-				<th>Name</th>
-				<th>Age</th>
-                <th>Sex</th>
-				<th>Breed</th>
-				<th>Colour</th>
-				<th>Activity</th>
-				<th>Maintenance</th>
-				<th>Competitions</th>
-                <th>Disqualified</th>
-			</tr>
-		</thead>
-        <tbody>
-          {% for dog in Dog %}
-			<tr>
-				<td>{{ dog.owner }}</td>
-				<td>{{ dog.name }}</td>
-				<td>{{ dog.age }}</td>
-				<td>{{ dog.gender }}</td>
-				<td>{{ dog.breed }}</td>
-				<td>{{ dog.color }}</td>
-				<td>{{ dog.activity }}</td>
-                <td>{{ dog.maintenance }}</td>
-                <td>{{ dog.competitions }}</td>
-                <td>{{ dog.disqualified }}</td>
-			</tr>
-          {% endfor %}
-        </tbody>
-	</table>
-    <br>
-	<br>
-
-	<a href = "{{ url_for('index2') }}" class="button w3-left w3-pink">BACK</a>
-    <br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-</div>
-
-<footer>
-	<p>Natalia Palej&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student No: A00279259<br>
-	Email: <a href="mailto:A00279259@student.tus.ie">A00279259@student.tus.ie</a></p>
-</footer>
-</body>
+		<footer>
+			<p>Natalia Palej&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student No: A00279259<br>
+			Email: <a href="mailto:A00279259@student.tus.ie">A00279259@student.tus.ie</a></p>
+		</footer>
+	</body>
 </html>
