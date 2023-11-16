@@ -4,14 +4,21 @@
     <list default="true" id="fc561828-75a6-472f-9dda-c46eaff8a505" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/build-config.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/cloud-run-deployed-url.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/cloud-run-url.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/config-run-locally.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/edit-config.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/local-build-config.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/local-success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/status-bar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/celebration-dark.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/celebration.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/cloud-run-32-color.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/cloud_bg.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/dark_bg.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/lightbulb_icon.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/get_all.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/get_all.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/logout.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/logout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/update.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/update.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +67,7 @@
       <recent name="C:\Users\Palej\OneDrive\Desktop\Software Design with AI for Cloud\Year_3\software-dev-cloud-labs\Assessment\python-project3\NPalej_A00279259\static" />
     </key>
   </component>
-  <component name="RunManager" selected="Cloud Code: Cloud Run.Cloud Run: Run Locally">
+  <component name="RunManager" selected="Python.database">
     <configuration name="Cloud Run: Deploy" type="CloudCodeCloudRunConfigurationType" factoryName="CloudCodeCloudDeployRunConfigurationFactory" show_console_on_std_err="false" show_console_on_std_out="false" imageBuilder="{&quot;name&quot;:&quot;Docker&quot;,&quot;payload&quot;:{&quot;path&quot;:&quot;Dockerfile&quot;}}" gcbSettings="{}">
       <option name="allowRunningInParallel" value="false" />
       <option name="buildEnvironment" value="Local" />
