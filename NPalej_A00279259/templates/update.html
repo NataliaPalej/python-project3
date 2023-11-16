@@ -29,47 +29,47 @@
 		<h1 class="w3-allerta">Update Your Doggie</h1>
 
 		<h4 class="w3-margin"><span class="raleway">{{user.user}}</span>,
-		you can update your dog, <span class="raleway">{{dog_list.name}}</span>, here.</h4>
+		you can update your dog, <span class="raleway">{{dog.name}}</span>, here.</h4>
 
 		<div class="w3-margin">
-			<form method = "post" action="{{ url_for('update') }}" class="w3-margin">
+			<form method="post" action="{{ url_for('update_dog', dog_name=dog.name) }}" class="w3-margin">
 				<label class="label-white">Dog Name:</label>
 				<input class="w3-input w3-animate-input input" type="text" name="name"
-					   value='{{dog_list.name}}' />
+					   value='{{dog.name}}' />
 				<br>
 				<label class="label-white">Age:</label>
 				<input class="w3-input w3-animate-input input" type="text" name="age"
-					   value='{{dog_list.age}}' />
+					   value='{{dog.age}}' />
 				<br>
 				<label class="label-white">Sex:</label>
 				<input class="w3-input w3-animate-input input" type="text" name="breed"
-					   value='{{dog_list.sex}}' />
+					   value='{{dog.sex}}' />
 				<br>
 				<label class="label-white">Breed:</label>
 				<input class="w3-input w3-animate-input input" type="text" name="colour"
-					   value='{{dog_list.breed}}' />
+					   value='{{dog.breed}}' />
 				<br>
 				<label class="label-white">Colour: </label>
 				<input class="w3-input w3-animate-input input" type="text" name="maintenance"
-					   value='{{dog_list.colour}}' />
+					   value='{{dog.colour}}' />
 				<br>
 				<label class="label-white">Activity Level:</label>
 				<input class="w3-input w3-animate-input input" type="text" name="activity"
-					  value='{{dog_list.activity}}' />
+					  value='{{dog.activity}}' />
 				<br>
 				<label class="label-white">Maintenance: </label>
 				<input class="w3-input w3-animate-input input" type="text" name="maintenance"
-					   value='{{dog_list.maintenance}}' />
+					   value='{{dog.maintenance}}' />
 				<br>
 				<label class="label-white">Competitions: </label>
 				<input class="w3-input w3-animate-input input" type="text" name="maintenance"
-					   value='{{dog_list.competitions}}' />
+					   value='{{dog.competitions}}' />
 				<br>
 				<label class="label-white">Disqualified: </label>
 				<input class="w3-input w3-animate-input input" type="text" name="maintenance"
-					   value='{{dog_list.disqualified}}' />
+					   value='{{dog.disqualified}}' />
 				<br>
-				<input type="submit" value="Update" class="button w3-left"/>
+				<input type="submit" value="Update" name="update" class="button w3-left"/>
 
 				<br>
 				<br>
