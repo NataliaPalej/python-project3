@@ -40,7 +40,6 @@
 			<table class="w3-table table w3-hoverable">
 				<thead>
 					<tr>
-					  <th>Owner</th>
 					  <th>Name</th>
 					  <th>Age</th>
 					  <th>Sex</th>
@@ -55,12 +54,11 @@
 			  <tbody>
 			  {% for dog in dogs_list %}
 				<tr>
-				  <td>{{ dog.user }}</td>
 				  <td>{{ dog.name }}</td>
 				  <td>{{ dog.age }}</td>
 				  <td>{{ dog.sex }}</td>
 				  <td>{{ dog.breed }}</td>
-				  <td>{{ dog.color }}</td>
+				  <td>{{ dog.colour }}</td>
 				  <td>{{ dog.activity }}</td>
 				  <td>{{ dog.maintenance }}</td>
 				  <td>{{ dog.competitions }}</td>
