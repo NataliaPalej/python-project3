@@ -353,8 +353,10 @@ def increment(dog, attribute):
 ###################################################
 @app.route('/get_all', methods=['GET', 'POST'])
 def get_all():
+    user_id = session.get('user_id')
+    user = db.session.query(User).get(user_id)
     all_dogs = Dog.query.all()
-    return render_template('get_all.html', Dog=all_dogs)
+    return render_template('get_all.html', user=user, Dog=all_dogs)
 
 
 ###################################################
@@ -465,7 +467,7 @@ def add():
 @app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
-    return redirect(url_for('logout'))
+    return render_template('logout.html')
 
 
 if __name__ == '__main__':
