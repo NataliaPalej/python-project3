@@ -2,24 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc561828-75a6-472f-9dda-c46eaff8a505" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/static/images/add.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/background3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/background4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/delete.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/iconPerson.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/iconPet.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/index.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/login.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/logout.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/update.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/get_all.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/update2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dogs.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/dogs.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/background4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/register.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index2.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/update2.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/update.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +21,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -38,6 +30,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2YBD6Rc0sF5b81ACFpjFH0HO3Z6" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -51,7 +46,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "DefaultHtmlFileTemplate": "HTML File",
-    "com.google.cloudcode.ide_session_index": "20231114_0000",
+    "com.google.cloudcode.ide_session_index": "20231116_0000",
     "last_opened_file_path": "C:/Users/Palej/OneDrive/Desktop/Software Design with AI for Cloud/Year_3/software-dev-cloud-labs/Assessment/python-project3/NPalej_A00279259/static/images",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
@@ -135,6 +130,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="database" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="NPalej_A00279259" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/database.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile">
       <deployment type="dockerfile">
         <settings>
@@ -145,6 +161,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.database" />
         <item itemvalue="Python.app" />
       </list>
     </recent_temporary>

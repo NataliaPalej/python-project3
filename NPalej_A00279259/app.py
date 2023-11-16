@@ -2,32 +2,37 @@
 A sample Hello World server.
 """
 import os
-
-from flask import Flask, request, flash, url_for, redirect, session, render_template
+from flask import Flask, request, flash, url_for, redirect, session, render_template, get_flashed_messages
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import ForeignKey
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dogs.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dog_manager.sqlite3'
 app.secret_key = 'super secret key'
 db = SQLAlchemy(app)
 
 
 class User(db.Model):
-    __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True)
-    owner = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)
+    __tablename__ = 'user_table'
 
-    def __init__(self, owner, email, password):
-        self.owner = owner
-        self.email = email
-        self.password = password
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(50), nullable=False)
+    user_email = db.Column(db.String(120), unique=True, nullable=False)
+    user_password = db.Column(db.String(120), nullable=False)
+
+    dogs = db.relationship('Dog', back_populates='user')
+
+    def __init__(self, user, user_email, user_password):
+        self.user = user
+        self.user_email = user_email
+        self.user_password = user_password
 
 
 class Dog(db.Model):
-    __tablename__ = 'dog'
+    __tablename__ = 'dog_table'
+
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey("user_table.id"))
     name = db.Column(db.String(25))
     age = db.Column(db.Integer)
     sex = db.Column(db.String(25))
@@ -37,10 +42,11 @@ class Dog(db.Model):
     maintenance = db.Column(db.String(25))
     competitions = db.Column(db.Integer)
     disqualified = db.Column(db.String(50))
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    owner = db.relationship('User', backref=db.backref('dogs', lazy=True))
 
-    def __init__(self, name, age, sex, breed, colour, activity, maintenance, competitions, disqualified, owner):
+    user = db.relationship('User', back_populates='dogs')
+
+    def __init__(self, user_id, name, age, sex, breed, colour, activity, maintenance, competitions, disqualified):
+        self.user_id = user_id
         self.name = name
         self.age = age
         self.sex = sex
@@ -50,14 +56,14 @@ class Dog(db.Model):
         self.maintenance = maintenance
         self.competitions = competitions
         self.disqualified = disqualified
-        self.owner = owner
 
 
+# Order in which tables are created, user first and then dog
 db.create_all()
 
 # Ensure index2, delete2 & update2 are referencing the same dog
-global_user = User('A', 'A', 'A')
-global_dog = Dog('A', 'A', 0, "A", "A", "A", "A", "A", 0, 'A')
+global_user = None
+global_dog = None
 
 
 ###################################################
@@ -75,106 +81,98 @@ def get_dog_by_name(name):
     return dog
 
 
-def get_dog_by_owner(owner):
-    dog = db.session.query(Dog).join(User).filter(User.owner == owner).first()
+def get_dog_by_user(user):
+    dog = db.session.query(Dog).join(User).filter(User.user == user).first()
     if not dog:
-        print('get_dog_by_owner() error: dog not found')
+        print('get_dog_by_user() error: dog not found')
         os.abort()
     else:
-        print("get_dog_by_owner(): ", dog)
+        print("get_dog_by_user(): ", dog)
     return dog
 
 
 ###################################################
-#                INDEX2 METHOD                    #
+#             OWNERS AND DOGS METHODS             #
 ###################################################
+def users_count():
+    # Count the number of users in the User table
+    count = User.query.count()
+    return count
 
-@app.route('/index2')
-def render_index2():
-    return render_template('index2.html')
+
+def dogs_count():
+    # Count the number of dogs in the Dog table
+    count = Dog.query.count()
+    return count
 
 
+###################################################
+#                    ROUTES                       #
+###################################################
 @app.route('/', methods=['GET', 'POST'])
-def index2():
-    global global_dog
+def login():  # login page route
+    if 'Login' in request.form:
+        user_email = request.form['user_email']
+        user_password = request.form['user_password']
+
+        # Query the database to find the user with the provided email and password
+        user = db.session.query(User).filter_by(user_email=user_email, user_password=user_password).first()
+        if user:
+            # Set the user session for session management
+            session['user_id'] = user.id
+            print("User {0} logged in successfully.".format(user.user))
+            flash('Login successful !', 'success')
+            return redirect(url_for('index2'))
+        else:
+            flash('Invalid email or password', 'error')
+    elif 'Register' in request.form:
+        return redirect(url_for('register'))
+    return render_template('login.html')
+
+
+# Route to display the registration page
+@app.route('/register', methods=['GET', 'POST'])
+def register():
     if request.method == 'POST':
-        if 'Search_By_Owner' in request.form:
-            if not request.form['owner']:
-                print("index2() Search_By_Owner error")
-                flash('Flash index2() Search_By_Owner error\n'
-                      'Please enter owner name', 'error')
-            else:
-                searchOwner = request.form['owner']
-                dogsList = db.session.query(Dog).filter(Dog.owner == searchOwner).all()
-                return render_template('get_all.html', message='Test', Dog=dogsList)
+        # Validate that all required form fields are present
+        required_fields = ['user', 'user_email', 'user_password']
+        for field in required_fields:
+            if not request.form.get(field):
+                print("register() error, all fields must be filled")
+                flash(f'Flash register() error\nPlease enter {field}', 'error')
+                return redirect(url_for('register'))
 
-        elif 'Search_By_Name' in request.form:
-            if not request.form['name']:
-                print("index2() Search_By_Name error")
-                flash('Flash index2() Search_By_Name Error \n'
-                      'Please enter dogs name', 'error')
-            else:
-                searchName = request.form['name']
-                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
-                return render_template('search.html', message='Test', dog=dog)
+        # Check if the user with the given email already exists
+        user_exists = db.session.query(User).filter_by(user_email=request.form['user_email']).first()
+        if user_exists:
+            flash('User with this email already exists. Please log in.', 'error')
+            return redirect(url_for('login'))
 
-        elif 'Delete_Dog' in request.form:
-            if not request.form['name']:
-                print("index2() Delete_Dog error")
-                flash('Flash index2() Delete_Dog Error\n'
-                      'Please enter dogs name to delete', 'error')
-            else:
-                searchName = request.form['name']
-                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
-                global_dog = dog
-                return redirect(url_for('delete2', dog=dog))
+        # Create a new user instance and add it to the database
+        new_user = User(
+            user=request.form['user'],
+            user_email=request.form['user_email'],
+            user_password=request.form['user_password']
+        )
 
-        elif 'Update_Dog' in request.form:
-            if not request.form['name']:
-                print("index2() Update_Dog error")
-                flash('Flash index2() Update_Dog error\n'
-                      'Please enter dogs name to update', 'error')
-            else:
-                searchName = request.form['name']
-                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
-                global_dog = dog
-                return redirect(url_for('update2', dog=dog))
+        db.session.add(new_user)
+        db.session.commit()
 
-        elif 'Increment_Dog_Age' in request.form:
-            if not request.form['name']:
-                print("index2() Increment_Dog_Age error")
-                flash('Flash index2() Increment_Dog_Age error\n'
-                      'Please enter all the name fields', 'error')
-            else:
-                searchName = request.form['name']
-                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
-                global_dog = dog
-                return redirect(url_for('increment_age', dog=dog))
+        # print("Registration successful. Welcome {0} and your doggie {1}".format(new_user.user, new_dog.name))
+        # flash('Registration successful. Please log in.', 'success')
+        return redirect(url_for('login', success_message='200'))
 
-        elif 'Increment_Competitions' in request.form:
-            if not request.form['name']:
-                print("index2() Increment_Competitions error")
-                flash('Flash index2() Increment_Competitions error\n'
-                      'Please enter dogs name to increment competitions', 'error')
-            else:
-                searchName = request.form['name']
-                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
-                global_dog = dog
-                return redirect(url_for('increment_competitions', dog=dog))
+    return render_template('register.html')
 
-        elif 'Update_Disqualified' in request.form:
-            if not request.form['name']:
-                print("index2() Update_Disqualified error")
-                flash('Flash index2() Update_Disqualified error\n'
-                      'Please enter dogs name to update disqualified field', 'error')
-            else:
-                searchName = request.form['name']
-                dog = db.session.query(Dog).filter(Dog.name == searchName).first()
-                global_dog = dog
-                return redirect(url_for('update_disqualified2', dog=dog))
 
-    all_data3 = db.session.query(Dog).all()
-    return render_template('index2.html', message='test', Dog=all_data3)
+@app.route('/index2', methods=['GET', 'POST'])
+def index2():
+    user_id = session.get('user_id')  # Assuming you store user ID in the session
+    dogs_list = db.session.query(Dog).filter(Dog.user_id == user_id).all()
+
+    # if request.method == 'POST':
+
+    return render_template('index2.html', message='200', Dog=dogs_list)
 
 
 ###################################################
@@ -186,39 +184,51 @@ def search():
     return render_template('search.html')
 
 
+@app.route('/selected_dog', methods=['POST'])
+def selected_dog():
+    selected_dog_name = request.form.get('name')
+    user_choice = request.form.get('userChoice')
+
+    if user_choice == 'Update':
+        return redirect(url_for('update_dog', dog_name=selected_dog_name))
+    elif user_choice == 'Delete':
+        return redirect(url_for('delete_dog', dog_name=selected_dog_name))
+    else:
+        flash('Invalid action selected', 'error')
+        return redirect(url_for('index2'))
+
+
 ###################################################
 #                DELETE METHOD                    #
 ###################################################
-@app.route('/delete2', methods=['GET', 'POST'])
-def delete2():
+@app.route('/delete_dog/<dog_name>', methods=['GET', 'POST'])
+def delete_dog(dog_name):
+    # Fetch the dog from the database based on the provided name
+    dog = db.session.query(Dog).filter(Dog.name == dog_name).first()
+
     if request.method == 'POST':
-        if not request.form['name']:
-            print("delete2() error")
-            flash('Flash delete2() error\nPlease enter dogs name', 'error')
-        else:
-            searchName = request.form['name']
-            dog = db.session.query(Dog).filter(Dog.name == searchName).first()
+        try:
             db.session.delete(dog)
             db.session.commit()
+            flash('Dog deleted successfully!', 'success')
             return redirect(url_for('get_all'))
+        except Exception as e:
+            flash('Error deleting dog {0}: {1}'.format(dog_name, str(e)), 'error')
 
-    searchDog = global_dog
-    return render_template('delete2.html', dog=searchDog)
+    return render_template('delete.html', dog=dog)
 
 
 ###################################################
 #                UPDATE METHOD                    #
 ###################################################
-@app.route('/update2', methods=['GET', 'POST'])
-def update2():
+@app.route('/update_dog/<dog_name>', methods=['GET', 'POST'])
+def update_dog(dog_name):
+    # Fetch the dog from the database based on the provided name
+    dog = db.session.query(Dog).filter(Dog.name == dog_name).first()
+
     if request.method == 'POST':
-        if not request.form['name']:
-            print("update2() error")
-            flash('Flash update2() error\nPlease enter dogs name to update', 'error')
-        else:
-            updateName = request.form['name']
-            dog = db.session.query(Dog).join(User).filter(Dog.name == updateName).first()
-            dog.owner = request.form['owner']
+        try:
+            dog.user = request.form['user']
             dog.name = request.form['name']
             dog.breed = request.form['breed']
             dog.colour = request.form['colour']
@@ -226,15 +236,17 @@ def update2():
             dog.maintenance = request.form['maintenance']
             dog.competitions = request.form['competitions']
             dog.disqualified = request.form['disqualified']
-            dog.owner_email = request.form['owner_email']
-            dog.owner_password = request.form['owner_password']
+            dog.user_email = request.form['user_email']
+            dog.user_password = request.form['user_password']
             db.session.commit()
 
             print('Dog {0} was successfully updated'.format(dog.name))
-            return redirect(url_for('get_all'))
-    searchDog = global_dog
+            flash('Dog {0} was successfully updated'.format(dog.name), 'success')
+            return redirect(url_for('index2'))
+        except Exception as e:
+            flash('Error updating dog {0}: {1}'.format(dog_name, str(e)), 'error')
 
-    return render_template('update2.html', dog=searchDog)
+    return render_template('update.html', dog=dog)
 
 
 ###################################################
@@ -319,18 +331,34 @@ def get_all():
 @app.route('/initial_table_data', methods=['GET', 'POST'])
 def initial_table_data():
     if request.method == 'POST':
-        print('here')
-        db.session.add(Dog('Natalia', 'Lilly', 3, "Female", 'Yorkshire Terrier', 'Tan-Silver', 'High', 'High', 2,
-                           'No', 'natalia@gmail.com', 'natalia'))
-        db.session.add(Dog('Monika', 'Gizmo', 9, 'Male', 'Shi Tzu', 'Black-White', 'Low', 'Medium', 0,
-                           'No', 'monika@gmail.com', 'monika')),
-        db.session.add(Dog('Dominik', 'Luna', 3, 'Female', 'Cavapoo', 'Light-Brown', 'Medium', 'Medium', 1,
-                           'No', 'dominik@gmail.com', 'dominik'))
-        db.session.add(Dog('Kasia', 'Coco', 3, 'Male', 'Cockpoo', 'Dark-Brown', 'High', 'Medium', 2,
-                           'No', 'kasia@gmail.com', 'kasia'))
-        db.session.add(Dog('Adrian', 'Lola', 1, 'Female', 'Yorkshire Terrier', 'Silver-Tan', 'High', 'Very High', 0,
-                           'No', 'adrian@gmail.com', 'adrian'))
+        # Creating Users
+        natalia = User(user='Natalia', user_email='natalia@gmail.com', user_password='natalia')
+        monika = User(user='Monika', user_email='monika@gmail.com', user_password='monika')
+        dominik = User(user='Dominik', user_email='dominik@gmail.com', user_password='dominik')
+        kasia = User(user='Kasia', user_email='kasia@gmail.com', user_password='kasia')
+        adrian = User(user='Adrian', user_email='adrian@gmail.com', user_password='adrian')
+
+        db.session.add_all([natalia, monika, dominik, kasia, adrian])
         db.session.commit()
+
+        # Creating Dogs
+        db.session.add(Dog(user_id=natalia.id, name='Lilly', age=3, sex='Female', breed='Yorkshire Terrier',
+                           colour='Tan-Silver', activity='High', maintenance='High', competitions=2,
+                           disqualified='No'))
+        db.session.add(Dog(user_id=monika.id, name='Gizmo', age=9, sex='Male', breed='Shi Tzu',
+                           colour='Black-White', activity='Low', maintenance='Medium', competitions=0,
+                           disqualified='No'))
+        db.session.add(Dog(user_id=dominik.id, name='Luna', age=3, sex='Female', breed='Cavapoo',
+                           colour='Light-Brown', activity='Medium', maintenance='Medium', competitions=1,
+                           disqualified='No'))
+        db.session.add(Dog(user_id=kasia.id, name='Coco', age=3, sex='Male', breed='Cockpoo',
+                           colour='Dark-Brown', activity='High', maintenance='Medium', competitions=2,
+                           disqualified='No'))
+        db.session.add(Dog(user_id=adrian.id, name='Lola', age=1, sex='Female', breed='Yorkshire Terrier',
+                           colour='Silver-Tan', activity='High', maintenance='Very High', competitions=0,
+                           disqualified='No'))
+        db.session.commit()
+
         flash('Initial Table Data Added')
 
     return render_template('initial_table_data.html')
@@ -342,15 +370,14 @@ def initial_table_data():
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        # Validate that all required form fields are present
         try:
             # Validate that all required form fields are present
-            required_fields = ['owner', 'name', 'age', 'sex', 'breed', 'colour', 'activity', 'maintenance',
-                               'competitions', 'disqualified', 'owner_email', 'owner_password']
+            required_fields = ['name', 'age', 'sex', 'breed', 'colour', 'activity', 'maintenance',
+                               'competitions', 'disqualified']
             for field in required_fields:
                 if not request.form.get(field):
                     print("add() error, all fields must be filled")
-                    flash(f'Flash add() error\nPlease enter {field}', 'error')
+                    flash(f'add() error\nPlease enter {field}', 'error')
                     return redirect(url_for('add'))
 
             # Convert age and competitions to integers
@@ -366,9 +393,16 @@ def add():
                 flash('Age and Competitions must be positive numbers', 'error')
                 return redirect(url_for('add'))
 
+            # Get the user ID from the session
+            user_id = session.get('user_id')
+            if not user_id:
+                print("add() error: user not logged in")
+                flash('add() error: User not logged in', 'error')
+                return redirect(url_for('login'))
+
             # Create new Dog instance
-            dog = Dog(
-                owner=request.form['owner'],
+            new_dog = Dog(
+                user_id=user_id,
                 name=request.form['name'],
                 age=age,
                 sex=request.form['sex'],
@@ -381,17 +415,15 @@ def add():
             )
 
             # Add new dog to the database
-            db.session.add(dog)
+            db.session.add(new_dog)
             db.session.commit()
 
-            flash('Dog {0} added successfully!'.format(dog.name))
+            flash('Dog {0} added successfully!'.format(new_dog.name))
             return redirect(url_for('get_all'))
         except Exception as e:
-            # Print error message
             print(f"add() error: {str(e)}")
             flash('flash add() error:', 'error')
             return redirect(url_for('add'))
-
     return render_template('add.html')
 
 

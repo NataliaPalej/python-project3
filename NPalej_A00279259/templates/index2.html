@@ -58,16 +58,16 @@
           <tbody>
           {% for dog in Dog %}
             <tr>
-              <td>{{ Dog.owner }}</td>
-              <td>{{ Dog.name }}</td>
-              <td>{{ Dog.age }}</td>
-              <td>{{ Dog.gender }}</td>
-              <td>{{ Dog.breed }}</td>
-              <td>{{ Dog.color }}</td>
-              <td>{{ Dog.activity }}</td>
-              <td>{{ Dog.maintenance }}</td>
-              <td>{{ Dog.competitions }}</td>
-              <td>{{ Dog.disqualified }}</td>
+              <td>{{ dog.user }}</td>
+              <td>{{ dog.name }}</td>
+              <td>{{ dog.age }}</td>
+              <td>{{ dog.sex }}</td>
+              <td>{{ dog.breed }}</td>
+              <td>{{ dog.color }}</td>
+              <td>{{ dog.activity }}</td>
+              <td>{{ dog.maintenance }}</td>
+              <td>{{ dog.competitions }}</td>
+              <td>{{ dog.disqualified }}</td>
 			</tr>
 		  {% endfor %}
           </tbody>
@@ -75,12 +75,12 @@
 
 	<!-- UPDATE/DELETE dog -->
 		<div class="w3-margin">
-			<form method="post" action="SelectedDog">
+			<form method="post" action="{{ url_for('selected_dog') }}">
 		        <label for="selectDog">Select dog to update/delete:</label>
 			        <select name="name" id="selectDog" style="width: 200px;" >
-			            <c:forEach items="${dogDetails}" var="dogObj">
-			                <option value="${dogObj.name}">${dogObj.name}</option>
-			            </c:forEach>
+						{% for dog in Dog %}
+							<option value="{{ dog.name }}">{{ dog.name }}</option>
+						{% endfor %}
 			        </select>
 			        <div class="w3-panel">
 			        	<input type="submit" name="userChoice" value="Update" class="menuType w3-margin" style="width: 40%"/>
@@ -114,7 +114,7 @@
 	<div class="w3-container">
 		<div class="w3-quarter">
 			<form method="post" action="{{ url_for('logout') }}">
-				<input type="submit" value="LOGOUT" class="menuType" />
+				<input type="submit" name="Logout" value="Logout" class="menuType" />
 			</form>
 		</div>
 	</div>
@@ -126,7 +126,6 @@
 	<br>
 	<br>
 
-<!-- Footer, FIX SO IT DOESNT COVER PAGE CONTENT -->
 <footer>
 	<p>Natalia Palej&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student No: A00279259<br>
 	Email: <a href="mailto:A00279259@student.tus.ie">A00279259@student.tus.ie</a></p>
