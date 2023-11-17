@@ -68,77 +68,70 @@ def create_tables():
 
 
 def add_initial_data():
-    # Check if the users already exist
-    natalia = User.query.filter_by(user_email='natalia@gmail.com').first()
-    if not natalia:
-        # Creating Users
-        natalia = User(user='Natalia', user_email='natalia@gmail.com', user_password='natalia')
-        monika = User(user='Monika', user_email='monika@gmail.com', user_password='monika')
-        dominik = User(user='Dominik', user_email='dominik@gmail.com', user_password='dominik')
-        kasia = User(user='Kasia', user_email='kasia@gmail.com', user_password='kasia')
-        adrian = User(user='Adrian', user_email='adrian@gmail.com', user_password='adrian')
+    # Create initial users and dogs
+    natalia = User(user='Natalia', user_email='natalia@gmail.com', user_password='natalia')
+    monika = User(user='Monika', user_email='monika@gmail.com', user_password='monika')
+    dominik = User(user='Dominik', user_email='dominik@gmail.com', user_password='dominik')
+    kasia = User(user='Kasia', user_email='kasia@gmail.com', user_password='kasia')
+    adrian = User(user='Adrian', user_email='adrian@gmail.com', user_password='adrian')
+    john = User(user='John', user_email='john@gmail.com', user_password='john')
+    anna = User(user='Anna', user_email='anna@gmail.com', user_password='anna')
+    michael = User(user='Michael', user_email='michael@gmail.com', user_password='michael')
+    sophie = User(user='Sophie', user_email='sophie@gmail.com', user_password='sophie')
+    david = User(user='David', user_email='david@gmail.com', user_password='david')
+    users = [natalia, monika, dominik, kasia, adrian, john, anna, michael, sophie, david]
+    db.session.add_all(users)
+    db.session.commit()
 
-        db.session.add_all([natalia, monika, dominik, kasia, adrian])
-        db.session.commit()
-
-        # Check if the dogs already exist
-        lilly = Dog.query.filter_by(name='Lilly').first()
-        if not lilly:
-            # Creating Dogs
-            db.session.add(Dog(user_id=natalia.id, name='Lilly', age=3, sex='Female', breed='Yorkshire Terrier',
-                               colour='Tan-Silver', activity='High', maintenance='High', competitions=2,
-                               disqualified='No'))
-            db.session.add(Dog(user_id=monika.id, name='Gizmo', age=9, sex='Male', breed='Shi Tzu',
-                               colour='Black-White', activity='Low', maintenance='Medium', competitions=4,
-                               disqualified='Yes'))
-            db.session.add(Dog(user_id=dominik.id, name='Luna', age=3, sex='Female', breed='Cavapoo',
-                               colour='Light-Brown', activity='Medium', maintenance='Medium', competitions=1,
-                               disqualified='No'))
-            db.session.add(Dog(user_id=kasia.id, name='Coco', age=3, sex='Male', breed='Cockpoo',
-                               colour='Dark-Brown', activity='High', maintenance='Medium', competitions=2,
-                               disqualified='Yes'))
-            db.session.add(Dog(user_id=adrian.id, name='Lola', age=1, sex='Female', breed='Yorkshire Terrier',
-                               colour='Silver-Tan', activity='High', maintenance='Very High', competitions=0,
-                               disqualified='No'))
-            db.session.add(Dog(user_id=natalia.id, name='Saba', age=13, sex='Female', breed='Boxer',
-                               colour='Black-Brown', activity='Low', maintenance='Low', competitions=0,
-                               disqualified='No'))
-            db.session.commit()
-
-
-###################################################
-#                GET METHODS                      #
-###################################################
-
-def get_dog_by_name(name):
-    dog = db.session.query(Dog).join(User).filter(Dog.name == name).first()
-    if not dog:
-        print('get_dog_by_name() error: dog not found')
-        os.abort()
-    return dog
-
-
-def get_dog_by_user(user):
-    dog = db.session.query(Dog).join(User).filter(User.user == user).first()
-    if not dog:
-        print('get_dog_by_user() error: dog not found')
-        os.abort()
-    return dog
+    dogs = [
+        Dog(user_id=natalia.id, name='Lilly', age=3, sex='Female', breed='Yorkshire Terrier', colour='Tan-Silver',
+            activity='High', maintenance='High', competitions=2, disqualified='No'),
+        Dog(user_id=monika.id, name='Gizmo', age=9, sex='Male', breed='Shi Tzu', colour='Black-White',
+            activity='Low', maintenance='Medium', competitions=4, disqualified='Yes'),
+        Dog(user_id=dominik.id, name='Luna', age=3, sex='Female', breed='Cavapoo', colour='Light-Brown',
+            activity='Medium', maintenance='Medium', competitions=1, disqualified='No'),
+        Dog(user_id=kasia.id, name='Coco', age=3, sex='Male', breed='Cockapoo', colour='Dark-Brown',
+            activity='High', maintenance='Medium', competitions=2, disqualified='Yes'),
+        Dog(user_id=adrian.id, name='Lola', age=1, sex='Female', breed='Yorkshire Terrier', colour='Silver-Tan',
+            activity='High', maintenance='Very High', competitions=0, disqualified='No'),
+        Dog(user_id=natalia.id, name='Saba', age=13, sex='Female', breed='Boxer', colour='Black-Brown',
+            activity='Low', maintenance='Low', competitions=0, disqualified='No'),
+        Dog(user_id=john.id, name='Max', age=3, sex='Male', breed='Poodle', colour='White', activity='High',
+            maintenance='Medium', competitions=2, disqualified='Yes'),
+        Dog(user_id=anna.id, name='Rocky', age=7, sex='Male', breed='Bulldog', colour='Brindle', activity='Low',
+            maintenance='High', competitions=0, disqualified='No'),
+        Dog(user_id=michael.id, name='Mia', age=1, sex='Female', breed='Dachshund', colour='Red', activity='Medium',
+            maintenance='Low', competitions=1, disqualified='No'),
+        Dog(user_id=sophie.id, name='Charlie', age=4, sex='Male', breed='Shiba Inu', colour='Red-Sesame',
+            activity='High', maintenance='Medium', competitions=3, disqualified='No'),
+        Dog(user_id=david.id, name='Sophie', age=5, sex='Female', breed='Cocker Spaniel', colour='Buff',
+            activity='Medium', maintenance='High', competitions=2, disqualified='No'),
+        Dog(user_id=monika.id, name='Buddy', age=5, sex='Male', breed='Golden Retriever', colour='Golden',
+            activity='High', maintenance='Medium', competitions=3, disqualified='No'),
+        Dog(user_id=dominik.id, name='Oscar', age=2, sex='Male', breed='Labrador Retriever', colour='Chocolate',
+            activity='Medium', maintenance='High', competitions=1, disqualified='No'),
+        Dog(user_id=kasia.id, name='Milo', age=4, sex='Male', breed='Beagle', colour='Tricolor', activity='Medium',
+            maintenance='Low', competitions=2, disqualified='Yes'),
+        Dog(user_id=adrian.id, name='Lucy', age=6, sex='Female', breed='German Shepherd', colour='Black-Tan',
+            activity='High', maintenance='High', competitions=4, disqualified='No')
+    ]
+    db.session.add_all(dogs)
+    db.session.commit()
 
 
 ###################################################
 #                    ROUTES                       #
 ###################################################
 @app.route('/', methods=['GET', 'POST'])
-def login():  # login page route
+def login():
     if 'Login' in request.form:
         user_email = request.form['user_email']
         user_password = request.form['user_password']
 
-        # Query the database to find the user with the provided email and password
+        # Find user with the provided email and password
         user = db.session.query(User).filter_by(user_email=user_email, user_password=user_password).first()
         if user:
-            # Set the user session for session management
+            # Set session
             session['user_id'] = user.id
             flash('Login successful !', 'success')
             return redirect(url_for('index'))
@@ -150,42 +143,40 @@ def login():  # login page route
 
 
 ###################################################
-#                ADD METHOD                       #
+#               REGISTER METHOD                   #
 ###################################################
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    # Call class methods to get counts
+    # Calling class methods to get counts
     users_count_value = User.count_users()
     dogs_count_value = Dog.count_dogs()
 
     if request.method == 'POST':
-        # Validate that all required form fields are present
+        # Validate required fields are filled
         required_fields = ['user', 'user_email', 'user_password']
         for field in required_fields:
             if not request.form.get(field):
                 flash(f'Flash register() error\nPlease enter {field}', 'error')
                 return redirect(url_for('register'))
 
-        # Check if the user with the given email already exists
+        # Check if the email already exists
         user_exists = db.session.query(User).filter_by(user_email=request.form['user_email']).first()
         if user_exists:
-            flash('User with this email already exists. Please log in.', 'error')
+            flash('User with email "{0}" already exists. Please log in.'.format(user_exists), 'error')
             return redirect(url_for('login'))
 
-        # Create a new user instance and add it to the database
+        # Create a new user
         new_user = User(
             user=request.form['user'],
             user_email=request.form['user_email'],
             user_password=request.form['user_password']
         )
-
+        # Add new user to the db
         db.session.add(new_user)
         db.session.commit()
 
-        # print("Registration successful. Welcome {0} and your doggie {1}".format(new_user.user, new_dog.name))
-        # flash('Registration successful. Please log in.', 'success')
+        flash('Registration successful. Please log in.', 'success')
         return redirect(url_for('login', success_message='200'))
-
     return render_template('register.html', users_count=users_count_value, dogs_count=dogs_count_value)
 
 
@@ -228,7 +219,7 @@ def selected_dog():
 ###################################################
 @app.route('/delete_dog/<dog_name>', methods=['GET', 'POST'])
 def delete_dog(dog_name):
-    # Fetch the dog from the database based on the provided name
+    # Fetch the dog based on name
     dog = db.session.query(Dog).filter(Dog.name == dog_name).first()
     # Fetch user details
     user_id = session.get('user_id')
@@ -242,7 +233,6 @@ def delete_dog(dog_name):
             return redirect(url_for('index'))
         except Exception as e:
             flash('Error deleting dog {0}: {1}'.format(dog_name, str(e)), 'error')
-
     return render_template('delete.html', user=user, dog=dog)
 
 
@@ -251,33 +241,46 @@ def delete_dog(dog_name):
 ###################################################
 @app.route('/update_dog/<dog_name>', methods=['GET', 'POST'])
 def update_dog(dog_name):
-    # Fetch user details
     user_id = session.get('user_id')
     user = db.session.query(User).get(user_id)
     dog = db.session.query(Dog).filter(Dog.name == dog_name).first()
 
     if request.method == 'POST':
-        updated_dog = db.session.query(Dog).filter(Dog.name == dog_name).first()
         try:
-            updated_dog.name = request.form['name']
-            updated_dog.breed = request.form['breed']
-            updated_dog.colour = request.form['colour']
-            updated_dog.activity = request.form['activity']
-            updated_dog.maintenance = request.form['maintenance']
-            updated_dog.disqualified = request.form['disqualified']
+            new_name = request.form.get('name')
+            new_sex = request.form.get('sex')
+            new_breed = request.form.get('breed')
+            new_colour = request.form.get('colour')
+            new_activity = request.form.get('activity')
+            new_maintenance = request.form.get('maintenance')
+            new_disqualified = request.form.get('disqualified')
+
+            # Update fields only if they are not None
+            if new_name is not None:
+                dog.name = new_name
+            if new_sex is not None:
+                dog.sex = new_sex
+            if new_breed is not None:
+                dog.breed = new_breed
+            if new_colour is not None:
+                dog.colour = new_colour
+            if new_activity is not None:
+                dog.activity = new_activity
+            if new_maintenance is not None:
+                dog.maintenance = new_maintenance
+            if new_disqualified is not None:
+                dog.disqualified = new_disqualified
             db.session.commit()
 
-            flash('Dog {0} was successfully updated'.format(updated_dog.name), 'success')
+            flash('Dog {0} was successfully updated'.format(dog.name), 'success')
             return redirect(url_for('index'))
         except Exception as e:
             flash('Error updating dog {0}: {1}'.format(dog_name, str(e)), 'error')
-
     return render_template('update.html', user=user, dog=dog)
 
 
 @app.route('/update_user', methods=['GET', 'POST'])
 def update_user():
-    # Fetch user
     user_id = session.get('user_id')
     user = db.session.query(User).get(user_id)
     if request.method == 'POST':
@@ -291,7 +294,6 @@ def update_user():
             return redirect(url_for('index'))
         except Exception as e:
             flash('Error updating user {0}: {1}'.format(user.user, str(e)), 'error')
-
     return render_template('update_user.html', user=user)
 
 
@@ -300,7 +302,6 @@ def update_user():
 ###################################################
 @app.route('/update_value/<int:dog_id>/<field>', methods=['POST'])
 def update_value(dog_id, field):
-    # Fetch the dog based on ID
     dog = db.session.query(Dog).filter(Dog.id == dog_id).first()
     user_choice = request.form.get('choice')
 
@@ -331,7 +332,7 @@ def update_value(dog_id, field):
 
 
 ###################################################
-#                 GET ALL DOGS                    #
+#                   GET DOGS                      #
 ###################################################
 @app.route('/get_all', methods=['GET', 'POST'])
 def get_all():
@@ -369,7 +370,6 @@ def get_by():
 ###################################################
 @app.route('/add', methods=['GET', 'POST'])
 def add():
-    # Fetch user
     user_id = session.get('user_id')
     if not user_id:
         flash('add() error: User not logged in', 'error')
@@ -412,7 +412,6 @@ def add():
                 disqualified=request.form['disqualified'],
             )
 
-            # Add new dog to the database
             db.session.add(new_dog)
             db.session.commit()
 

@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc561828-75a6-472f-9dda-c46eaff8a505" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/templates/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/update.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/update.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assessment_Software_Design_for_Cloud3_2023.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../Assessment_Software_Design_for_Cloud3_2023.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/add.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/add.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/alldogs.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/alldogs.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/background3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/background3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/delete.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/delete.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/index.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/index.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/register.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/register.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/update.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/update.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/update_user.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/update_user.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
