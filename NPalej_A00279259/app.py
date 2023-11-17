@@ -352,7 +352,15 @@ def get_by_name():
     return render_template('get_all.html')
 
 
-
+@app.route('/get_by_user', methods=['GET', 'POST'])
+def get_by_user():
+    user_id = session.get('user_id')
+    user = db.session.query(User).get(user_id)
+    if request.method == 'POST':
+        user_name = request.form.get('user')
+        get_user = db.session.query(Dog).filter(Dog.user.has(User.user == user_name)).all()
+        return render_template('get_all.html', get_user=get_user, user=user)
+    return render_template('get_all.html')
 
 
 ###################################################

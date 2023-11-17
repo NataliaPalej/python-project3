@@ -41,15 +41,19 @@
 				</form>
 			</div>
 
-			
-
-			<!-- SEARCH by USER goes HERE -->
+			<div class="w3-container w3-third">
+				<form method = "post" action="{{ url_for('get_by_user') }}">
+					<label class="label">Search by Owner's Name:</label>
+					<input type="text" name="user" class="inputText"/>
+					<input type="submit" name="choice" value="Search User" class="w3-right inputSubmit"/>
+				</form>
+			</div>
 		</div>
 
 		<!-- SHOW ALL button -->
-		<div class="w3-row" id="showAllButton" style="display: {{ 'block' if show_all else 'none' }};">
+		<div class="w3-row" id="showAllButton" style="display: none;">
 			<form method="get" action="{{ url_for('get_all') }}">
-				<input type="submit" value="Show All Dogs" class="w3-right inputSubmit" />
+				<input type="submit" value="Show All" class="w3-right inputSubmit" />
 			</form>
 		</div>
 
@@ -71,9 +75,9 @@
 					</tr>
 				</thead>
 				<tbody>
-				<!-- Display details for the searched dog -->
 				{% if get_dog %}
 					{% for dog in get_dog %}
+					<!-- GET by dog name -->
 					<tr>
 						<td>{{ dog.user.user }}</td>
                         <td>{{ dog.name }}</td>
@@ -85,11 +89,27 @@
                         <td>{{ dog.maintenance }}</td>
                         <td>{{ dog.competitions }}</td>
                         <td>{{ dog.disqualified }}</td>
-						</tr>
+					</tr>
+					{% endfor %}
+				{% elif get_user %}
+					{% for dog in get_user %}
+					<!-- GET by user -->
+					<tr>
+						<td>{{ dog.user.user }}</td>
+                        <td>{{ dog.name }}</td>
+                        <td>{{ dog.age }}</td>
+                        <td>{{ dog.sex }}</td>
+                        <td>{{ dog.breed }}</td>
+                        <td>{{ dog.colour }}</td>
+                        <td>{{ dog.activity }}</td>
+                        <td>{{ dog.maintenance }}</td>
+                        <td>{{ dog.competitions }}</td>
+                        <td>{{ dog.disqualified }}</td>
+					</tr>
 					{% endfor %}
 				{% else %}
-				<!-- Display all details -->
 					{% for dog in dogs %}
+					<!-- GET all -->
 					<tr>
 						<td>{{ dog.user.user }}</td>
 						<td>{{ dog.name }}</td>
