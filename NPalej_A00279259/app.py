@@ -115,8 +115,6 @@ def get_dog_by_name(name):
     if not dog:
         print('get_dog_by_name() error: dog not found')
         os.abort()
-    else:
-        print("get_dog_by_name(): ", dog)
     return dog
 
 
@@ -125,8 +123,6 @@ def get_dog_by_user(user):
     if not dog:
         print('get_dog_by_user() error: dog not found')
         os.abort()
-    else:
-        print("get_dog_by_user(): ", dog)
     return dog
 
 
@@ -144,7 +140,6 @@ def login():  # login page route
         if user:
             # Set the user session for session management
             session['user_id'] = user.id
-            print("User {0} logged in successfully.".format(user.user))
             flash('Login successful !', 'success')
             return redirect(url_for('index'))
         else:
@@ -166,7 +161,6 @@ def register():
         required_fields = ['user', 'user_email', 'user_password']
         for field in required_fields:
             if not request.form.get(field):
-                print("register() error, all fields must be filled")
                 flash(f'Flash register() error\nPlease enter {field}', 'error')
                 return redirect(url_for('register'))
 
@@ -271,7 +265,6 @@ def update_dog(dog_name):
             updated_dog.disqualified = request.form['disqualified']
             db.session.commit()
 
-            print('Dog {0} was successfully updated'.format(updated_dog.name))
             flash('Dog {0} was successfully updated'.format(updated_dog.name), 'success')
             return redirect(url_for('index'))
         except Exception as e:
@@ -292,7 +285,6 @@ def update_user():
             user.user_password = request.form['user_password']
             db.session.commit()
 
-            print('User {0} was successfully updated'.format(user.user))
             flash('User {0} was successfully updated'.format(user.user), 'success')
             return redirect(url_for('index'))
         except Exception as e:
@@ -355,7 +347,6 @@ def add():
     # Get the user ID from the session
     user_id = session.get('user_id')
     if not user_id:
-        print("add() error: user not logged in")
         flash('add() error: User not logged in', 'error')
         return redirect(url_for('login'))
 
@@ -369,21 +360,17 @@ def add():
                                'competitions', 'disqualified']
             for field in required_fields:
                 if not request.form.get(field):
-                    print("add() error, all fields must be filled")
                     flash(f'add() error\nPlease enter {field}', 'error')
                     return redirect(url_for('add'))
 
-            # Convert age and competitions to integers
             try:
                 age = int(request.form['age'])
                 competitions = int(request.form['competitions'])
+                if age < 0 or competitions < 0:
+                    flash('Age and competitions must be positive numbers', 'error')
+                    return redirect(url_for('add'))
             except ValueError:
-                flash('Age and Competitions must be positive numbers', 'error')
-                return redirect(url_for('add'))
-
-            # Check if age and competitions positive
-            if age < 0 or competitions < 0:
-                flash('Age and Competitions must be positive numbers', 'error')
+                flash('ValueError: age and competitions must be numbers only', 'error')
                 return redirect(url_for('add'))
 
             # Create new Dog instance
@@ -407,8 +394,7 @@ def add():
             flash('Dog {0} added successfully!'.format(new_dog.name))
             return redirect(url_for('index'))
         except Exception as e:
-            print(f"add() error: {str(e)}")
-            flash('flash add() error:', 'error')
+            flash('flash add() error: {0}'.format(str(e)), 'error')
             return redirect(url_for('add'))
     return render_template('add.html', user=user)
 
