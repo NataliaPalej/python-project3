@@ -44,8 +44,8 @@
     <form method="post" action="{{ url_for('delete_dog', dog_name=dog.name) }}" id="deleteForm" style="display: none;">
     </form>
 
-    <input type="button" value="BACK" class="w3-left inputSubmit" onclick="window.location='{{ url_for('index') }}';" />
-    <input type="button" value="Delete" class="w3-left inputSubmit" onclick="confirmDelete()" />
+    <a href = "{{ url_for('index') }}" class="button w3-left w3-pink w3-margin">BACK</a>
+    <input type="button" value="Delete" class="button w3-left w3-red w3-margin" onclick="confirmDelete()" />
 
     <footer>
         <p>Natalia Palej&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student No: A00279259<br>
