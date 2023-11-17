@@ -24,6 +24,10 @@ class User(db.Model):
         self.user_email = user_email
         self.user_password = user_password
 
+    @classmethod
+    def count_users(cls):
+        return cls.query.count()
+
 
 class Dog(db.Model):
     __tablename__ = 'dog_table'
@@ -54,6 +58,10 @@ class Dog(db.Model):
         self.competitions = competitions
         self.disqualified = disqualified
 
+    @classmethod
+    def count_dogs(cls):
+        return cls.query.count()
+
 
 def create_tables():
     db.create_all()
@@ -81,16 +89,19 @@ def add_initial_data():
                                colour='Tan-Silver', activity='High', maintenance='High', competitions=2,
                                disqualified='No'))
             db.session.add(Dog(user_id=monika.id, name='Gizmo', age=9, sex='Male', breed='Shi Tzu',
-                               colour='Black-White', activity='Low', maintenance='Medium', competitions=0,
-                               disqualified='No'))
+                               colour='Black-White', activity='Low', maintenance='Medium', competitions=4,
+                               disqualified='Yes'))
             db.session.add(Dog(user_id=dominik.id, name='Luna', age=3, sex='Female', breed='Cavapoo',
                                colour='Light-Brown', activity='Medium', maintenance='Medium', competitions=1,
                                disqualified='No'))
             db.session.add(Dog(user_id=kasia.id, name='Coco', age=3, sex='Male', breed='Cockpoo',
                                colour='Dark-Brown', activity='High', maintenance='Medium', competitions=2,
-                               disqualified='No'))
+                               disqualified='Yes'))
             db.session.add(Dog(user_id=adrian.id, name='Lola', age=1, sex='Female', breed='Yorkshire Terrier',
                                colour='Silver-Tan', activity='High', maintenance='Very High', competitions=0,
+                               disqualified='No'))
+            db.session.add(Dog(user_id=natalia.id, name='Saba', age=13, sex='Female', breed='Boxer',
+                               colour='Black-Brown', activity='Low', maintenance='Low', competitions=0,
                                disqualified='No'))
             db.session.commit()
 
@@ -102,7 +113,6 @@ def add_initial_data():
 def get_dog_by_name(name):
     dog = db.session.query(Dog).join(User).filter(Dog.name == name).first()
     if not dog:
-        # Dog not found, return a 404 error
         print('get_dog_by_name() error: dog not found')
         os.abort()
     else:
@@ -118,21 +128,6 @@ def get_dog_by_user(user):
     else:
         print("get_dog_by_user(): ", dog)
     return dog
-
-
-###################################################
-#             OWNERS AND DOGS METHODS             #
-###################################################
-def users_count():
-    # Count the number of users in the User table
-    count = User.query.count()
-    return count
-
-
-def dogs_count():
-    # Count the number of dogs in the Dog table
-    count = Dog.query.count()
-    return count
 
 
 ###################################################
@@ -162,6 +157,10 @@ def login():  # login page route
 # Route to display the registration page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    # Call class methods to get counts
+    users_count_value = User.count_users()
+    dogs_count_value = Dog.count_dogs()
+
     if request.method == 'POST':
         # Validate that all required form fields are present
         required_fields = ['user', 'user_email', 'user_password']
@@ -191,7 +190,7 @@ def register():
         # flash('Registration successful. Please log in.', 'success')
         return redirect(url_for('login', success_message='200'))
 
-    return render_template('register.html')
+    return render_template('register.html', users_count=users_count_value, dogs_count=dogs_count_value)
 
 
 @app.route('/index', methods=['GET', 'POST'])
@@ -316,17 +315,21 @@ def update_value(dog_id, field):
             if user_choice == '+':
                 dog.age += 1
                 flash('{0}\' age was successfully stepped up'.format(dog.name), 'success')
-            elif user_choice == '-':
+            elif user_choice == '-' and dog.age > 0:
                 dog.age -= 1
                 flash('{0}\' age was successfully stepped down'.format(dog.name), 'success')
+            else:
+                flash('Age cannot be below zero.', 'error')
 
         if field == 'competitions':
             if user_choice == '+':
                 dog.competitions += 1
                 flash('{0}\' competitions number was successfully stepped up'.format(dog.name), 'success')
-            elif user_choice == '-':
+            elif user_choice == '-' and dog.competitions > 0:
                 dog.competitions -= 1
                 flash('{0}\' competitions number was successfully stepped down'.format(dog.name), 'success')
+            else:
+                flash('Competitions cannot be negative.', 'error')
         db.session.commit()
         return redirect(url_for('index'))
     else:
