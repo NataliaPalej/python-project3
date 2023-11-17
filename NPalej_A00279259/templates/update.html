@@ -44,8 +44,11 @@
 					   value='{{dog.name}}' />
 				<br>
 				<label class="label-white">Sex:</label>
-				<input class="w3-input w3-animate-input input" type="text" name="sex"
-					   value='{{dog.sex}}' />
+					<select name="sex" class="w3-input w3-animate-input input">
+						<option value="{{dog.sex}}" disabled selected>{{dog.sex}}</option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+					</select>
 				<br>
 				<label class="label-white">Breed:</label>
 				<input class="w3-input w3-animate-input input" type="text" name="breed"
@@ -56,16 +59,31 @@
 					   value='{{dog.colour}}' />
 				<br>
 				<label class="label-white">Activity Level:</label>
-				<input class="w3-input w3-animate-input input" type="text" name="activity"
-					  value='{{dog.activity}}' />
+					<select name="activity" class="w3-input w3-animate-input input">
+						<option value="{{dog.activity}}" disabled selected>{{dog.activity}}</option>
+						<option value="Very Low">Very Low</option>
+						<option value="Low">Low</option>
+						<option value="Medium">Medium</option>
+						<option value="High">High</option>
+						<option value="Very High">Very High</option>
+					</select>
 				<br>
 				<label class="label-white">Maintenance: </label>
-				<input class="w3-input w3-animate-input input" type="text" name="maintenance"
-					   value='{{dog.maintenance}}' />
+					<select name="maintenance" class="w3-input w3-animate-input input">
+						<option value="{{dog.maintenance}}" disabled selected>{{dog.maintenance}}</option>
+						<option value="Very Low">Very Low</option>
+						<option value="Low">Low</option>
+						<option value="Medium">Medium</option>
+						<option value="High">High</option>
+						<option value="Very High">Very High</option>
+					</select>
 				<br>
 				<label class="label-white">Disqualified: </label>
-				<input class="w3-input w3-animate-input input" type="text" name="disqualified"
-					   value='{{dog.disqualified}}' />
+					<select name="disqualified" class="w3-input w3-animate-input input">
+						<option value="{{dog.disqualified}}" disabled selected>{{dog.disqualified}}</option>
+						<option value="Yes">Yes</option>
+						<option value="No">No</option>
+					</select>
 				<br>
 				<input type="submit" value="Update" name="update" class="button w3-left"/>
 
