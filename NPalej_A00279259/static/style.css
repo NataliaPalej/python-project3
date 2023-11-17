@@ -87,7 +87,15 @@ body {
 	padding: 20px 40px;
     border: none;
     border-radius: 8px;
-    margin-right: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.showAll {
+	padding: 20px 40px;
+	margin-top: 22px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
 }
 

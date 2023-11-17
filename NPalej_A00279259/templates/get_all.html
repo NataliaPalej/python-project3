@@ -32,31 +32,31 @@
 		<br>
 
 		<!-- SEARCH for DOG by NAME or USER -->
-		<div class="w3-row">
+		<div class="w3-row w3-margin">
 			<div class="w3-container w3-third">
+				<label class="label">Search Dog:</label>
 				<form method = "post" action="{{ url_for('get_by') }}">
-					<label class="label">Search by Dog's Name:</label>
-					<input type="text" name="name" class="inputText"/>
-					<input type="submit" name="choice" value="Search Dog" class="w3-right inputSubmit"/>
+					<input type="text" name="name" class="inputText" style="width: 53%;"/>
+					<input type="submit" name="choice" value="Search Dog" class="w3-right button" style="display: inline-block; width: 45%;"/>
 				</form>
 			</div>
 
 			<div class="w3-container w3-third">
+				<label class="label">Search Owner:</label>
 				<form method = "post" action="{{ url_for('get_by') }}">
-					<label class="label">Search by Owner's Name:</label>
-					<input type="text" name="user" class="inputText"/>
-					<input type="submit" name="choice" value="Search User" class="w3-right inputSubmit"/>
+					<input type="text" name="user" class="inputText" style="width: 53%;"/>
+					<input type="submit" name="choice" value="Search User" class="w3-right button" style="display: inline-block; width: 45%;"/>
+				</form>
+			</div>
+
+			<!-- SHOW ALL button -->
+			<div class="w3-third" id="showAllButton">
+				<form method="get" action="{{ url_for('get_all') }}">
+					<input type="submit" value="Show All" class="w3-left w3-pink showAll" />
 				</form>
 			</div>
 		</div>
-
-		<!-- SHOW ALL button -->
-		<div class="w3-row" id="showAllButton" style="display: none;">
-			<form method="get" action="{{ url_for('get_all') }}">
-				<input type="submit" value="Show All" class="w3-right inputSubmit" />
-			</form>
-		</div>
-
+		<br>
 		<!-- ALL DOGS details -->
 		<div class="w3-container w3-center">
 			<table class="w3-table table w3-hoverable">
