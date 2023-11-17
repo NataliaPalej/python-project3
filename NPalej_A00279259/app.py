@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, flash, url_for, redirect, session, render_template
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, func
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dog_manager.sqlite3'
@@ -352,11 +352,11 @@ def get_by():
         try:
             if user_choice == 'Search Dog':
                 dog_name = request.form.get('name')
-                get_dog = db.session.query(Dog).filter(Dog.name == dog_name).all()
+                get_dog = db.session.query(Dog).filter(func.lower(Dog.name) == func.lower(dog_name)).all()
                 return render_template('get_all.html', get_dog=get_dog, user=user)
             elif user_choice == 'Search User':
                 user_name = request.form.get('user')
-                get_user = db.session.query(Dog).filter(Dog.user.has(User.user == user_name)).all()
+                get_user = db.session.query(Dog).filter(Dog.user.has(func.lower(User.user) == func.lower(user_name))).all()
                 return render_template('get_all.html', get_user=get_user, user=user)
         except Exception as e:
             flash('get_by() error: {0}'.format(str(e)), 'error')
