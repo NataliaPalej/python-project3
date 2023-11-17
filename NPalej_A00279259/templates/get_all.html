@@ -34,7 +34,7 @@
 		<!-- SEARCH for DOG by NAME or USER -->
 		<div class="w3-row">
 			<div class="w3-container w3-third">
-				<form method = "post" action="{{ url_for('get_by_name') }}">
+				<form method = "post" action="{{ url_for('get_by') }}">
 					<label class="label">Search by Dog's Name:</label>
 					<input type="text" name="name" class="inputText"/>
 					<input type="submit" name="choice" value="Search Dog" class="w3-right inputSubmit"/>
@@ -42,7 +42,7 @@
 			</div>
 
 			<div class="w3-container w3-third">
-				<form method = "post" action="{{ url_for('get_by_user') }}">
+				<form method = "post" action="{{ url_for('get_by') }}">
 					<label class="label">Search by Owner's Name:</label>
 					<input type="text" name="user" class="inputText"/>
 					<input type="submit" name="choice" value="Search User" class="w3-right inputSubmit"/>

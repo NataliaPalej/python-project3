@@ -341,26 +341,27 @@ def get_all():
     return render_template('get_all.html', user=user, dogs=all_dogs)
 
 
-@app.route('/get_by_name', methods=['GET', 'POST'])
-def get_by_name():
+@app.route('/get_by', methods=['GET', 'POST'])
+def get_by():
     user_id = session.get('user_id')
     user = db.session.query(User).get(user_id)
-    if request.method == 'POST':
-        dog_name = request.form.get('name')
-        get_dog = db.session.query(Dog).filter(Dog.name == dog_name).all()
-        return render_template('get_all.html', get_dog=get_dog, user=user)
-    return render_template('get_all.html')
+    user_choice = request.form.get('choice')
 
-
-@app.route('/get_by_user', methods=['GET', 'POST'])
-def get_by_user():
-    user_id = session.get('user_id')
-    user = db.session.query(User).get(user_id)
     if request.method == 'POST':
-        user_name = request.form.get('user')
-        get_user = db.session.query(Dog).filter(Dog.user.has(User.user == user_name)).all()
-        return render_template('get_all.html', get_user=get_user, user=user)
-    return render_template('get_all.html')
+        try:
+            if user_choice == 'Search Dog':
+                dog_name = request.form.get('name')
+                get_dog = db.session.query(Dog).filter(Dog.name == dog_name).all()
+                return render_template('get_all.html', get_dog=get_dog, user=user)
+            elif user_choice == 'Search User':
+                user_name = request.form.get('user')
+                get_user = db.session.query(Dog).filter(Dog.user.has(User.user == user_name)).all()
+                return render_template('get_all.html', get_user=get_user, user=user)
+        except Exception as e:
+            flash('get_by() error: {0}'.format(str(e)), 'error')
+            return redirect(url_for('index'))
+    else:
+        return render_template('get_all.html')
 
 
 ###################################################
@@ -368,18 +369,18 @@ def get_by_user():
 ###################################################
 @app.route('/add', methods=['GET', 'POST'])
 def add():
-    # Get the user ID from the session
+    # Fetch user
     user_id = session.get('user_id')
     if not user_id:
         flash('add() error: User not logged in', 'error')
         return redirect(url_for('login'))
 
-    # Retrieve user information for later use in rendering the template
+    # Retrieve user info
     user = db.session.query(User).get(user_id)
 
     if request.method == 'POST':
         try:
-            # Validate that all required form fields are present
+            # Check that all required form fields are present
             required_fields = ['name', 'age', 'sex', 'breed', 'colour', 'activity', 'maintenance',
                                'competitions', 'disqualified']
             for field in required_fields:
