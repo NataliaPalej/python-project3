@@ -31,38 +31,79 @@
 		<h4><span class="raleway">{{user.user}}</span>, you can find list of all dogs registered in the app.</h4>
 		<br>
 
+		<!-- SEARCH for DOG by NAME or USER -->
+		<div class="w3-row">
+			<div class="w3-container w3-third">
+				<form method = "post" action="{{ url_for('get_by_name') }}">
+					<label class="label">Search by Dog's Name:</label>
+					<input type="text" name="name" class="inputText"/>
+					<input type="submit" name="choice" value="Search Dog" class="w3-right inputSubmit"/>
+				</form>
+			</div>
+
+			
+
+			<!-- SEARCH by USER goes HERE -->
+		</div>
+
+		<!-- SHOW ALL button -->
+		<div class="w3-row" id="showAllButton" style="display: {{ 'block' if show_all else 'none' }};">
+			<form method="get" action="{{ url_for('get_all') }}">
+				<input type="submit" value="Show All Dogs" class="w3-right inputSubmit" />
+			</form>
+		</div>
+
 		<!-- ALL DOGS details -->
 		<div class="w3-container w3-center">
 			<table class="w3-table table w3-hoverable">
 				<thead>
-				<tr>
-					<th>Owner</th>
-					<th>Name</th>
-					<th>Age</th>
-					<th>Sex</th>
-					<th>Breed</th>
-					<th>Colour</th>
-					<th>Activity</th>
-					<th>Maintenance</th>
-					<th>Competitions</th>
-					<th>Disqualified</th>
-				</tr>
+					<tr>
+						<th>Owner</th>
+						<th>Name</th>
+						<th>Age</th>
+						<th>Sex</th>
+						<th>Breed</th>
+						<th>Colour</th>
+						<th>Activity</th>
+						<th>Maintenance</th>
+						<th>Competitions</th>
+						<th>Disqualified</th>
+					</tr>
 				</thead>
 				<tbody>
-				{% for dog in dogs %}
-				<tr>
-					<td>{{ dog.user.user }}</td>
-					<td>{{ dog.name }}</td>
-					<td>{{ dog.age }}</td>
-					<td>{{ dog.sex }}</td>
-					<td>{{ dog.breed }}</td>
-					<td>{{ dog.colour }}</td>
-					<td>{{ dog.activity }}</td>
-					<td>{{ dog.maintenance }}</td>
-					<td>{{ dog.competitions }}</td>
-					<td>{{ dog.disqualified }}</td>
-				</tr>
-				{% endfor %}
+				<!-- Display details for the searched dog -->
+				{% if get_dog %}
+					{% for dog in get_dog %}
+					<tr>
+						<td>{{ dog.user.user }}</td>
+                        <td>{{ dog.name }}</td>
+                        <td>{{ dog.age }}</td>
+                        <td>{{ dog.sex }}</td>
+                        <td>{{ dog.breed }}</td>
+                        <td>{{ dog.colour }}</td>
+                        <td>{{ dog.activity }}</td>
+                        <td>{{ dog.maintenance }}</td>
+                        <td>{{ dog.competitions }}</td>
+                        <td>{{ dog.disqualified }}</td>
+						</tr>
+					{% endfor %}
+				{% else %}
+				<!-- Display all details -->
+					{% for dog in dogs %}
+					<tr>
+						<td>{{ dog.user.user }}</td>
+						<td>{{ dog.name }}</td>
+						<td>{{ dog.age }}</td>
+						<td>{{ dog.sex }}</td>
+						<td>{{ dog.breed }}</td>
+						<td>{{ dog.colour }}</td>
+						<td>{{ dog.activity }}</td>
+						<td>{{ dog.maintenance }}</td>
+						<td>{{ dog.competitions }}</td>
+						<td>{{ dog.disqualified }}</td>
+					</tr>
+					{% endfor %}
+				{% endif %}
 				</tbody>
 			</table>
 			<br>

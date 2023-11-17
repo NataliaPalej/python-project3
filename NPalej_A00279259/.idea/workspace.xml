@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/../Assessment_Software_Design_for_Cloud3_2023.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../Assessment_Software_Design_for_Cloud3_2023.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/get_all.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/get_all.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +41,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "DefaultHtmlFileTemplate": "HTML File",
-    "com.google.cloudcode.ide_session_index": "20231117_0000",
+    "com.google.cloudcode.ide_session_index": "20231117_0002",
     "last_opened_file_path": "C:/Users/Palej/OneDrive/Desktop/Software Design with AI for Cloud/Year_3/software-dev-cloud-labs/Assessment/python-project3/NPalej_A00279259/static/images",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }

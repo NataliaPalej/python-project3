@@ -149,7 +149,9 @@ def login():  # login page route
     return render_template('login.html')
 
 
-# Route to display the registration page
+###################################################
+#                ADD METHOD                       #
+###################################################
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     # Call class methods to get counts
@@ -337,6 +339,20 @@ def get_all():
     user = db.session.query(User).get(user_id)
     all_dogs = Dog.query.all()
     return render_template('get_all.html', user=user, dogs=all_dogs)
+
+
+@app.route('/get_by_name', methods=['GET', 'POST'])
+def get_by_name():
+    user_id = session.get('user_id')
+    user = db.session.query(User).get(user_id)
+    if request.method == 'POST':
+        dog_name = request.form.get('name')
+        get_dog = db.session.query(Dog).filter(Dog.name == dog_name).all()
+        return render_template('get_all.html', get_dog=get_dog, user=user)
+    return render_template('get_all.html')
+
+
+
 
 
 ###################################################
