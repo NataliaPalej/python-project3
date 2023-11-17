@@ -218,12 +218,13 @@ def selected_dog():
     user_id = session.get('user_id')
     user = db.session.query(User).get(user_id)
 
-    if user_choice == 'Update':
-        return redirect(url_for('update_dog', user=user, dog_name=selected_dog_name))
-    elif user_choice == 'Delete':
-        return redirect(url_for('delete_dog', user=user, dog_name=selected_dog_name))
-    else:
-        flash('Invalid action selected', 'error')
+    try:
+        if user_choice == 'Update':
+            return redirect(url_for('update_dog', user=user, dog_name=selected_dog_name))
+        elif user_choice == 'Delete':
+            return redirect(url_for('delete_dog', user=user, dog_name=selected_dog_name))
+    except Exception as e:
+        flash('selected_dog() error: no dog selected {0}'.format(str(e)), 'error')
         return redirect(url_for('index'))
 
 
