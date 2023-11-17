@@ -4,11 +4,6 @@
   font-family: "Allerta Stencil", Sans-serif;
 }
 
-.w3-sofia {
-  font-family: "Sofia", sans-serif;	
-  font-size: 30px;
-}
-
 .raleway {
 	font-family: 'Raleway', sans-serif;
 }
@@ -45,29 +40,12 @@ h4 {
 	opacity: 85%;
 }
 
-.hovertable tr:hover {
-    background-color: #4A235A;
-    color: white;
-}
-
 .form {
 	background-color: white;
 	opacity: 80%;
 	margin-bottom: 100px;
 	padding: 16px;
 	position: relative;
-}
-
-.form-container {
-	background-color: white;
-	opacity: 80%;
-	margin-bottom: 100px;
-	padding: 16px;
-	position: relative;
-	margin: auto;
-	max-width: 600px;
-	height: 600px;
-	overflow-y: auto;
 }
 
 .label{

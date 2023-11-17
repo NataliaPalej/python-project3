@@ -4,11 +4,9 @@
     <list default="true" id="fc561828-75a6-472f-9dda-c46eaff8a505" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../Assessment_Software_Design_for_Cloud3_2023.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../Assessment_Software_Design_for_Cloud3_2023.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/get_all.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/get_all.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/update.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/update.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +42,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "DefaultHtmlFileTemplate": "HTML File",
-    "com.google.cloudcode.ide_session_index": "20231116_0000",
+    "com.google.cloudcode.ide_session_index": "20231117_0000",
     "last_opened_file_path": "C:/Users/Palej/OneDrive/Desktop/Software Design with AI for Cloud/Year_3/software-dev-cloud-labs/Assessment/python-project3/NPalej_A00279259/static/images",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
