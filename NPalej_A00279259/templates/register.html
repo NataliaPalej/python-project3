@@ -45,7 +45,7 @@
                 </form>
             </div>
 
-            <div class="w3-half w3-container w3-padding w3-center w3-card">
+            <div class="w3-half w3-container w3-padding w3-center w3-card w3-margin">
                 <h4>Active Members</h4>
                 <div class="w3-left w3-container w3-cell">
                      <img src="{{ url_for('static', filename='images/iconPerson.png') }}" style="width: 60px; margin-right: 10px;"/>
@@ -61,10 +61,13 @@
                     <img src="{{ url_for('static', filename='images/iconPet.png') }}" style="width: 60px; margin-right: 10px;"/>
                 </div>
                 <div class="w3-left w3-container w3-cell">
-                    <p>Owners: {{ dogs_count }}</p>
+                    <p>Dogs: {{ dogs_count }}</p>
                 </div>
             </div>
         </div>
+
+        <!-- BACK button -->
+        <a href = "{{ url_for('login') }}" class="button w3-left w3-pink">BACK</a>
 
         <br>
         <br>
